@@ -1,13 +1,25 @@
 const type = {
-    Normal: 'Normal',
-    Fire: 'Fire',
-    Lightning: 'Lightning',
-    Earth: 'Earth',
-    Wind: 'Wind',
-    Water: 'Water'
+    0: 'Normal',
+    1: 'Fire',
+    2: 'Lightning',
+    3: 'Earth',
+    4: 'Wind',
+    5: 'Water'
 }
 const personality = {
-    Mimic: 'Mimic'
+    0: 'Hardy',
+    1: 'Docile',
+    2: 'Brave',
+    3: 'Jolly',
+    4: 'Impish',
+    5: 'Naive',
+    6: 'Timid',
+    7: 'Hasty',
+    8: 'Sassy',
+    9: 'Calm',
+    10: 'Relaxed',
+    11: 'Lonely',
+    12: 'Quirky'
 }
 
 const statDefinitions = [
