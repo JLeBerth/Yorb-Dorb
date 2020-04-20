@@ -1,48 +1,52 @@
 const type = {
-    Normal: 0,
-    Fire: 1,
-    Lightning: 2,
-    Earth: 3,
-    Wind: 4,
-    Water: 5
+    Normal: 'Normal',
+    Fire: 'Fire',
+    Lightning: 'Lightning',
+    Earth: 'Earth',
+    Wind: 'Wind',
+    Water: 'Water'
 }
 const personality = {
-    Mimic: 0
+    Mimic: 'Mimic'
 }
+
+const statDefinitions = [
+    "Health",
+    "Attack",
+    "Skill",
+    "Defence",
+    "Resist",
+    "Speed"
+]
 
 Object.freeze(type);
 Object.freeze(personality);
+
 class Dorb {
-    constructor(name, description, dorbtype, stats, personalitytype) {
+    constructor(name, description, dorbtype, nstats, personalitytype, dorbImageURL) {
         this.name = name;
         this.description = description;
-        type = dorbtype;
-        personality = personalitytype;
-        for (let i = 0; i < 6; i++) {
-            this.stats[i] = stats[i];
-        }
-    }
-    let name = "";
-    let description = "";
-    let type = type.Normal;
-    let stats = [];
-    let personality = personality.Mimic;
-    let moves = [];
-
-    function addMove(newMove) {
-        moves.push(newMove);
+        this.dorbImage = dorbImageURL;
+        this.type = dorbtype;
+        this.personality = personalitytype;
+        this.stats = nstats;
+        this.moves = [];
     }
 
-    function removeMove(moveReference)
+    addMove(newMove) {
+        this.moves.push(newMove);
+    }
+
+    removeMove(moveReference)
 {
     for(let i = moveReference; i < moves.length - 1; i++)
         {
-            moves[i] = moves[i+1];
+            this.moves[i] = this.moves[i+1];
         }
-    moves[moves.length - 1] = null;
+    this.moves[moves.length - 1] = null;
 }
 
-    function getStat(statReference)
+    getStat(statReference)
 {
     return stats[statReference];
 }
@@ -55,11 +59,9 @@ class Move {
     constructor(name, description, movetype, power) {
         this.name = name;
         this.description = description;
-        type = movetype;
+        this.type = movetype;
         this.power = power;
     }
-    let name = "";
-    let description = "";
-    let type = type.Normal;
-    let power;
 }
+
+export{Dorb, Move, type, personality, statDefinitions};
