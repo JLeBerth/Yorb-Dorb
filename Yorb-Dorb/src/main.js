@@ -51,6 +51,7 @@ function loop()
     switch (drawState)
         {
             case "home":
+                canvas.drawHomeScreen(testDorb);
                 break;
             case "train":
                 break;
