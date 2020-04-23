@@ -61,4 +61,14 @@ function drawHomeScreen(yourDorb)
         }
 }
 
-export{setupCanvas, drawHomeScreen};
+function drawCombatScreen()
+{
+    
+}
+
+function drawTrainingScreen()
+{
+    
+}
+
+export{setupCanvas, drawHomeScreen, drawCombatScreen, drawTrainingScreen};

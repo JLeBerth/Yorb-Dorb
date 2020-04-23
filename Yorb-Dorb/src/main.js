@@ -3,6 +3,9 @@ import * as dorb from "./dorbs.js";
 import * as rita from "./rita.js";
 import * as combat from "./combat.js";
 
+//declare drawstate
+let drawState = "home"
+
 // Make Dorb
 let ritaDorb = rita.generateDorb();
 let testDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]], "placeholder");
@@ -39,9 +42,21 @@ testDorb2.addMove(testMove4);
 function init()
 {
  canvas.setupCanvas(document.querySelector("#canvas"));
- canvas.drawHomeScreen(testDorb);
  combat.assignDorbs(testDorb, testDorb2);
  combat.loop();
+}
+
+function loop()
+{
+    switch (drawState)
+        {
+            case "home":
+                break;
+            case "train":
+                break;
+            case "combat":
+                break;
+        }
 }
 
 export{init};
