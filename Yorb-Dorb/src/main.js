@@ -44,10 +44,12 @@ function init()
  canvas.setupCanvas(document.querySelector("#canvas"));
  combat.assignDorbs(testDorb, testDorb2);
  combat.loop();
+    loop();
 }
 
 function loop()
 {
+    setTimeout(loop);
     switch (drawState)
         {
             case "home":
