@@ -57,7 +57,7 @@ function drawHomeScreen(yourDorb)
             ctx.font = "18px Arial";
             ctx.fillText("Power: " + yourDorb.moves[i].power, 450, 700 + (i * 65));
             ctx.fillText(yourDorb.moves[i].description, 120, 720 + (i * 65));
-            ctx.fillText("Type: " + yourDorb.moves[i].type, 600, 720 + (i * 65));
+            ctx.fillText("Type: " + yourDorb.moves[i].type.name, 600, 720 + (i * 65));
         }
 }
 

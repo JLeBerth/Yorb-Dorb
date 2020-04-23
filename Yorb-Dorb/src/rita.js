@@ -79,7 +79,7 @@ function generateMove(type)
     let moveGrammar = {
 	"<start>" : ["<type> <verb>"],
 	"<verb>" : [RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb")],
-    "<type>" : [type]
+    "<type>" : [type.name]
     };
     
     //"<personality>" : [RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality)],
