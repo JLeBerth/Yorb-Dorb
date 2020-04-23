@@ -6,7 +6,7 @@ let  type = {
     4: {name: 'Wind'},
     5: {name: 'Water'}
 }
-    
+
 let personality = {
     0: 'Hardy',
     1: 'Docile',
@@ -24,6 +24,9 @@ let personality = {
 }
 
 //define strengths and weaknesses
+type[0].strongVS = [];
+type[0].weakVS = [];
+
 type[1].strongVS = [3, 4];
 type[1].weakVS = [2,5];
 

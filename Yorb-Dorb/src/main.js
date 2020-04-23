@@ -9,11 +9,11 @@ let testDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " +
 
 // Move 1
 let firstMove = rita.generateMove(testDorb.type);
-let testMove = new dorb.Move(firstMove[0], firstMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10 );
+let testMove = new dorb.Move(firstMove[0], firstMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
 
 // Move 2
 let secondMove = rita.generateMove(testDorb.type);
-let testMove2 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10 );
+let testMove2 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3 );
 
 // Add Moves
 testDorb.addMove(testMove);
@@ -26,11 +26,11 @@ let testDorb2 = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " 
 
 // Move 3
 firstMove = rita.generateMove(testDorb2.type);
-let testMove3 = new dorb.Move(firstMove[0], firstMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10 );
+let testMove3 = new dorb.Move(firstMove[0], firstMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 5 );
 
 // Move 4
 secondMove = rita.generateMove(testDorb2.type);
-let testMove4 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10 );
+let testMove4 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 5);
 
 // Add Moves
 testDorb2.addMove(testMove3);

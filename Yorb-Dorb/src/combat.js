@@ -1,5 +1,7 @@
 import * as dorb from "./dorbs.js";
 
+let types = dorb.type;
+
 const turnState = {
     roundStart: 0,
     chooseMoves: 1,
@@ -8,7 +10,7 @@ const turnState = {
     fightOver: 4
 }
 
-let dorbOne, dorbTwo;
+let dorbOne, dorbTwo, oneHealth, twoHealth;
 
 let dorbOneMove, dorbTwoMove;
 
@@ -18,43 +20,45 @@ let currentState = turnState.roundStart;
 
 function loop()
 {
+    setTimeout(loop);
     switch(currentState)
         {
                 case turnState.roundStart:
                 //start of round effects
                 
                 //set dorb moves to null
-                dorbOneMove = null;
-                dorbTwoMove = null;
-                loop();
+                dorbOneMove = -1;
+                dorbTwoMove = -1;
+                
+                currentState = turnState.chooseMoves;
                 break;
                 
                 case turnState.chooseMoves:
-                if(dorbOneMove != null && dorbTwoMove != null)
+                if(dorbOneMove != -1 && dorbTwoMove != -1)
                     {
+                        
                         currentState = turnState.resolveMoves;
-                        loop;
                     }
                 else
                     {
                         //code to allow players to choose moves with button inputs, for now moves default to the first move
-                        loop();
+                        console.log("moves not chosen");
+                        dorbOneMove = 0;
+                        dorbTwoMove = 0;
                     }
                 break;
                 
                 case turnState.resolveMoves:
+                console.log("resolving moves");
                 dorbsFighting();
-                loop();
                 break;
                 
                 case turnState.resolveEffects:
                 //code to allow end of round effects
                 currentState = turnState.roundStart;
-                loop();
                 break;
                 
                 case turnState.fightOver:
-                console.log("fight over");
                 //implement code for breaking out of fight screen and giving rewards
                 break;
         }
@@ -65,6 +69,8 @@ function assignDorbs(one, two)
 {
     dorbOne = one;
     dorbTwo = two;
+    oneHealth = dorbOne.stats[0];
+    twoHealth = dorbTwo.stats[0];
 }
 
 function dorbsFighting()
@@ -72,11 +78,11 @@ function dorbsFighting()
     if(dorbOne.stats[5] > dorbTwo.stats[5])
                     {
                         //first dorb attacks second, if returns true ends fight, then second attacks first
-                        if(attack(dorbOne, dorbTwo, dorbOneMove))
+                        if(attack(dorbOne, dorbTwo, dorbOneMove, true))
                             {
                                 currentState = turnState.fightOver;
                             }
-                        else if(attack(dorbTwo, dorbOne, dorbTwoMove))
+                        else if(attack(dorbTwo, dorbOne, dorbTwoMove, false))
                             {
                                 currentState = turnState.fightOver;
                             }
@@ -92,11 +98,11 @@ function dorbsFighting()
                     }
                 else
                     {
-                         if(attack(dorbTwo, dorbOne, dorbTwoMove))
+                         if(attack(dorbTwo, dorbOne, dorbTwoMove, false))
                             {
                                 currentState = turnState.fightOver;
                             }
-                        else if(attack(dorbOne, dorbTwo, dorbOneMove))
+                        else if(attack(dorbOne, dorbTwo, dorbOneMove, true))
                             {
                                 currentState = turnState.fightOver;
                             }
@@ -111,12 +117,11 @@ function dorbsFighting()
 }
 
 //attack function calculates damage
-function attack(one, two, attackID)
+function attack(one, two, attackID, playerOneAttackBool)
 {
     let move = one.moves[attackID];
-    
     //calculate damage as power% of the dorbs attack stat / the defenders defensive stat
-    let damage = (move.power / 100) * (one.stats[move.skillID] / two.stats[move.skillDID]);
+    let damage = (move.power / 50) * (one.stats[move.skillID] * 1.5 / two.stats[move.skillDID]);
     
     //alter damage by type dependencies
     if(effective(two, move))
@@ -129,26 +134,40 @@ function attack(one, two, attackID)
         }
     
     //round up
-    math.ceil(damage);
+    damage = Math.ceil(damage);
     
     //deal the damage
-    two.stats[0] -= damage;
+    if(playerOneAttackBool)
+        {
+            twoHealth -= damage;
+             console.log(one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + twoHealth);
+            if(twoHealth <= 0)
+            {
+                return true;
+            }
+        }
+    else
+        {
+            oneHealth -= damage;
+             console.log(one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + oneHealth);
+            if(oneHealth <= 0)
+            {
+                return true;
+            }
+        }
     
-    console.log(one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + two.stats[0]);
+   
     
     //if the attack sets health to 0 or less return true
-    if(two.stats[0] <= 0)
-        {
-            return true;
-        }
+    
     return false;
 }
 
 function effective(dorb, move)
 {
-    for(let i = 0; dorb.type.weakVS.length; i++)
+    for(let i = 0; i < dorb.type.weakVS.length; i++)
         {
-            if (move.type.name == type[dorb.type.weakVS[i]].name)
+            if (move.type.name == types[dorb.type.weakVS[i]].name)
                 {
                     return true;
                 }
@@ -157,9 +176,9 @@ function effective(dorb, move)
 }
 function resist(dorb, move)
 {
-    for(let i = 0; dorb.type.strongVS.length; i++)
+    for(let i = 0; i < dorb.type.strongVS.length; i++)
         {
-            if (move.type.name == type[dorb.type.strongVS[i]].name)
+            if (move.type.name == types[dorb.type.weakVS[i]].name)
                 {
                     return true;
                 }
