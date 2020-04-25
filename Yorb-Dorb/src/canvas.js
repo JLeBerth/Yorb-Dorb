@@ -1,6 +1,13 @@
 import * as dorb from "./dorbs.js";
 let ctx,canvasWidth,canvasHeight
 
+let hBag = document.querySelector("#bag-h");
+let aBag = document.querySelector("#bag-a");
+let sBag = document.querySelector("#bag-s");
+let dBag = document.querySelector("#bag-d");
+let rBag = document.querySelector("#bag-r");
+let sBag = document.querySelector("#bag-s");
+
 function setupCanvas(canvasElement)
 {
     ctx = canvasElement.getContext("2d");
@@ -61,14 +68,30 @@ function drawHomeScreen(yourDorb)
         }
 }
 
-function drawCombatScreen()
+function drawTrainingScreen(yourDorb)
+{
+    ctx.save();
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    
+    ctx.fillStyle = "white";
+    ctx.font = "40px Arial";
+    
+    // title
+    ctx.fillText("Training with " + yourDorb.name, canvasWidth / 2 - 100, 100);  
+}
+
+// image on click (https://stackoverflow.com/questions/20090415/img-onclick-call-to-javascript-function)
+    // disable the button for a little bit for cooldown?
+        // https://stackoverflow.com/questions/9914286/onclick-button-timeout-javascript
+    // do a lil canvas jig or something (animation)?
+    // tick up the algorithm, check if the stat / clicker count reached a current
+        // if so, update the appropriate dorb's stat
+    
+
+function drawCombatScreen(yourDorb)
 {
     
 }
 
-function drawTrainingScreen()
-{
-    
-}
-
-export{setupCanvas, drawHomeScreen, drawCombatScreen, drawTrainingScreen};
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen};

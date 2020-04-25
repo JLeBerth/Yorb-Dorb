@@ -47,7 +47,7 @@ const statDefinitions = [
     "Health",
     "Attack",
     "Skill",
-    "Defence",
+    "Defense",
     "Resist",
     "Speed"
 ]

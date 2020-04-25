@@ -56,6 +56,7 @@ function loop()
                 canvas.drawHomeScreen(testDorb);
                 break;
             case "train":
+                canvas.drawTrainingScreen(testDorb);
                 break;
             case "combat":
                 break;
