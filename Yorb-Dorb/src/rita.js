@@ -112,7 +112,7 @@ function generateMove(type)
 // Takes a string and char; 't' for Type or 'p' for Personality
 // Generates number based on word
 // Returns remainder depending on type
-// 13 personalities (0-12), 6 types (0-5)
+// 8 personalities (0-7), 6 types (0-5)
 function randomNumber(word, type)
 {
     let value = 0;
@@ -121,7 +121,7 @@ function randomNumber(word, type)
         value += word.charCodeAt(i);
     }
     if (type == 'p')
-        return value % 13
+        return value % 8
     else if (type == 't')
         return value % 6
 }
