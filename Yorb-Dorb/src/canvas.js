@@ -3,16 +3,26 @@ let ctx,canvasWidth,canvasHeight
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
-let clicks = [
-    ["Health", 0, 10],
-    ["Attack", 0, 10],
-    ["Skill", 0, 10],
-    ["Defense", 0, 10],
-    ["Resist", 0, 10],
-    ["Speed", 0, 10]
-];
-
+hpBag = document.querySelector("#bag-hp");
 hpBag.onclick = clickBag;
+
+attBag = document.querySelector("#bag-att");
+sklBag = document.querySelector("#bag-skl");
+defBag = document.querySelector("#bag-def");
+resBag = document.querySelector("#bag-res");
+spdBag = document.querySelector("#bag-spd");
+let bagHalfWidth = hpBag.width/2;
+let bagHalfHeight = hpBag.height/2;
+
+let clicks = [
+    ["Health", 0, 10, false],
+    ["Attack", 0, 10, false],
+    ["Skill", 0, 10, false],
+    ["Defense", 0, 10, false],
+    ["Resist", 0, 10, false],
+    ["Speed", 0, 10, false]
+    // Alt, Count, Threshold, Achieved
+];
 
 function setupCanvas(canvasElement)
 {
@@ -87,44 +97,19 @@ function drawTrainingScreen(yourDorb)
     ctx.textAlign = "center";
     ctx.fillText("Training with " + yourDorb.name, canvasWidth/2, 100); 
     
-    setThresholds(yourDorb);
     setupBags();
-    
+    updateStats(yourDorb);
+    setThresholds(yourDorb);
 }
-
-/* image on click (https://stackoverflow.com/questions/20090415/img-onclick-call-to-javascript-function)
-     disable the button for a little bit for cooldown?
-         https://stackoverflow.com/questions/9914286/onclick-button-timeout-javascript
-     do a lil canvas jig or something (animation)?
-     tick up the algorithm, check if the stat / clicker count reached a current
-         if so, update the appropriate dorb's stat
-
- make a variable
- set it equal to stat * 3
- have different variables for tracking clicks on each bag
-     have a switch based on the image's alt to choose which variable gets increased
- as part of your thing, check if the current limit is met
-     if it's met, increase the related stat and reset the new threshold for clicks needed*/
 
 function drawCombatScreen(yourDorb)
 {
     
 }
 
+// HELPERS 
 function setupBags()
-{
-    // document references
-    hpBag = document.querySelector("#bag-hp");
-    attBag = document.querySelector("#bag-att");
-    sklBag = document.querySelector("#bag-skl");
-    defBag = document.querySelector("#bag-def");
-    resBag = document.querySelector("#bag-res");
-    spdBag = document.querySelector("#bag-spd");
-    
-    // draw images
-    let bagHalfWidth = hpBag.width/2;
-    let bagHalfHeight = hpBag.height/2;
-    
+{   
     ctx.textAlign = "center";
     ctx.font = "28px Arial";
     let fontBuffer = 28 + 20;
@@ -177,11 +162,6 @@ function setThresholds(yourDorb)
     {
         clicks[0][2] = yourDorb.stats[i] * 3;
     }
-    /*for(let i = 0; i < 6; i++)
-    {
-        ctx.fillText(dorb.statDefinitions[i] + ":", canvasWidth / 2 + 10, 180 + spacing * (i+1));
-        ctx.fillText(yourDorb.stats[i], canvasWidth / 2 + 110, 180 + spacing * (i+1));
-    }*/
 }
 
 function clickBag(e)
@@ -190,9 +170,33 @@ function clickBag(e)
     let index;
     for(let i = 0; i < 6; i++)
     {
-        if (clicks[0][0] == bag)
+        if (clicks[i][0] == bag)
         {
-            index = i;
+            clicks[i][1]++;
+            if (clicks[i][1] >= clicks[i][2])
+            {
+                console.log("Stat increased!")
+                clicks[i][1] = 0;
+                clicks[i][2] = ((((clicks[i][2])/3) + 1) * 3);
+                clicks[i][3] = true;
+            }
+            else 
+            {
+                alert("Training " + dorb.statDefinitions[i]);
+            }
+        }
+    }
+}
+
+function updateStats(yourDorb)
+{
+    for(let i = 0; i < 6; i++)
+    {
+        if (clicks[i][3] == true)
+        {
+            console.log("Stat increased: " + dorb.statDefinitions[i] + "!");
+            yourDorb.stats[i] += 1;
+            clicks[i][3] == false;
         }
     }
 }
