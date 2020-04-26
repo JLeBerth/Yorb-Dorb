@@ -42,11 +42,14 @@ function generateDorb()
     let dorb = ["", "", 0, 0];
     // name, description, type index, personality index
     
-    // name
-    let length = Math.floor(Math.random() * 3) + 1
-    let name = RiTa.randomWord("nn", length) + RiTa.randomWord("nn", length);
-    name = name.split('').sort(function(){return 0.5-Math.random()}).join('');
-    dorb[0] = name.slice(0, name.length/2);
+// NAME -----------------
+
+    let name = RiTa.randomWord("nn", 1) + RiTa.randomWord("nn", 1);             // two one-syllable random words as starter 
+    name = name.split('').sort(function(){return 0.5-Math.random()}).join('');  // scramble their order
+    name = name.slice(0, name.length/2);                                        // cut it in half
+    dorb[0] = name[0].toUpperCase() + name.slice(1);                            // capitalize the first letter
+    
+// DESCRIPTION ----------
     
     // description
     let descriptionGrammar = {

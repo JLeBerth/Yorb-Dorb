@@ -1,5 +1,7 @@
 import * as classes from "./classes.js";
 import * as dorb from "./dorbs.js";
+import * as utils from "./utils.js";
+
 let ctx,canvasWidth,canvasHeight
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
@@ -8,16 +10,16 @@ let dorbSprite;
 let enemydorbSprite;
 
 hpBag = document.querySelector("#bag-hp");
-hpBag.onclick = clickBag;
+// hpBag.onclick = clickBag;
 
 attBag = document.querySelector("#bag-att");
 sklBag = document.querySelector("#bag-skl");
 defBag = document.querySelector("#bag-def");
 resBag = document.querySelector("#bag-res");
 spdBag = document.querySelector("#bag-spd");
-let bagHalfWidth = hpBag.width/2;
-let bagHalfHeight = hpBag.height/2;
 
+let bagHalfWidth, bagHalfHeight;
+let columns, rows;
 
 let yourDorbImage = new Image();
 yourDorbImage.onload = function() {
@@ -29,14 +31,15 @@ enemyDorbImage.onload = function()
 {
     enemydorbSprite = new classes.ImageSprite(canvasWidth - 250, 350, 300, {x:1,y:0},0,enemyDorbImage);
 }
+
 let clicks = [
-    ["Health", 0, 10, false],
-    ["Attack", 0, 10, false],
-    ["Skill", 0, 10, false],
-    ["Defense", 0, 10, false],
-    ["Resist", 0, 10, false],
-    ["Speed", 0, 10, false]
-    // Alt, Count, Threshold, Achieved
+    ["Health", 0, 20],
+    ["Attack", 0, 10],
+    ["Skill", 0, 10],
+    ["Defense", 0, 10],
+    ["Resist", 0, 10],
+    ["Speed", 0, 10]
+    // Alt, Count, Threshold
 ];
 
 function setupCanvas(canvasElement)
@@ -44,6 +47,15 @@ function setupCanvas(canvasElement)
     ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
+    
+    rows = [1/3 * canvasHeight, 
+            2/3 * canvasHeight];
+    columns = [1/5 * canvasWidth, 
+               1/2 * canvasWidth, 
+               4/5 * canvasWidth];
+    
+    bagHalfWidth = hpBag.width/2;
+    bagHalfHeight = hpBag.height/2;
 
     
     ctx.fillStyle = "black";
@@ -110,7 +122,7 @@ function drawHomeScreen(yourDorb)
         }
 }
 
-function drawTrainingScreen(yourDorb)
+function drawTrainingScreen(yourDorb, click, coordinates)
 {    
     ctx.save();
     ctx.fillStyle = "#faa298";
@@ -124,8 +136,44 @@ function drawTrainingScreen(yourDorb)
     ctx.fillText("Training with " + yourDorb.name, canvasWidth/2, 100); 
     
     setupBags();
-    updateStats(yourDorb);
-    setThresholds(yourDorb);
+    
+    if (click == true)
+    {
+        for (let a = 0; a < 2; a++)
+        {
+            for (let b = 0; b < 3; b++)
+            {
+                if (utils.AABB(coordinates[0], coordinates[1], columns[b] - bagHalfWidth, rows[a] - (bagHalfHeight * 3/5), bagHalfWidth * 2, bagHalfHeight * 2))
+                {
+                    switch ("" + a + b + "")
+                    {
+                        case "00":
+                            trainStat("Health", yourDorb);
+                            break;
+                        case "01":
+                            trainStat("Attack", yourDorb);
+                            break;
+                        case "02":
+                            trainStat("Skill", yourDorb);
+                            break;
+                        case "10":
+                            trainStat("Defense", yourDorb);
+                            break;
+                        case "11":
+                            trainStat("Resist", yourDorb);
+                            break;
+                        case "12":
+                            trainStat("Speed", yourDorb);
+                            break;
+                    }  
+                    
+                    ctx.restore();
+                    return;
+                }
+            } 
+        }
+    }
+    
     ctx.restore();
 }
 
@@ -175,9 +223,9 @@ function drawCombatScreen(combatState)
     ctx.restore();
 }
 
-// HELPERS 
+// HELPERS -----------
 
-//wrap text function made using tutorial from html5canvastutorials
+// wrap text function made using tutorial from html5canvastutorials
 function wrapText(text, x, y, maxWidth, lineHeight, ctx) {
     let words = text.split(' ');
     var line = '';
@@ -198,100 +246,83 @@ function wrapText(text, x, y, maxWidth, lineHeight, ctx) {
   
 }
 
-
+// draw punching bags to screen
 function setupBags()
 {   
     ctx.textAlign = "center";
     ctx.font = "28px Arial";
     let fontBuffer = 28 + 20;
     
-    let column1 = 1/5 * canvasWidth;
-    let column2 = 1/2 * canvasWidth;
-    let column3 = 4/5 * canvasWidth;
-
-    let row1 = 1/3 * canvasHeight;
-    let row2 = 2/3 * canvasHeight;
-    
     // hp bag
     ctx.drawImage(
         hpBag, 
-        column1 - bagHalfWidth, 
-        row1 - bagHalfHeight
+        columns[0] - bagHalfWidth, 
+        rows[0] - bagHalfHeight
     );
     
     // hp label
     ctx.fillText(
         hpBag.alt, 
-        column1,        // center aligned, so just column1
-        row1 + bagHalfHeight + fontBuffer
+        columns[0],        // center aligned, so just column1
+        rows[0] + bagHalfHeight + fontBuffer
     );
         
     // attack
-    ctx.drawImage(attBag, column2 - bagHalfWidth, row1 - bagHalfHeight);
-    ctx.fillText(attBag.alt, column2, row1 + bagHalfHeight + fontBuffer);
+    ctx.drawImage(attBag, columns[1] - bagHalfWidth, rows[0] - bagHalfHeight);
+    ctx.fillText(attBag.alt, columns[1], rows[0] + bagHalfHeight + fontBuffer);
     
     // skill
-    ctx.drawImage(sklBag, column3 - bagHalfWidth, row1 - bagHalfHeight);        
-    ctx.fillText(sklBag.alt, column3, row1 + bagHalfHeight + fontBuffer);
+    ctx.drawImage(sklBag, columns[2] - bagHalfWidth, rows[0] - bagHalfHeight);        
+    ctx.fillText(sklBag.alt, columns[2], rows[0] + bagHalfHeight + fontBuffer);
 
     // defense
-    ctx.drawImage(defBag, column1 - bagHalfWidth, row2 - bagHalfHeight);
-    ctx.fillText(defBag.alt, column1, row2 + bagHalfHeight + fontBuffer);
+    ctx.drawImage(defBag, columns[0] - bagHalfWidth, rows[1] - bagHalfHeight);
+    ctx.fillText(defBag.alt, columns[0], rows[1] + bagHalfHeight + fontBuffer);
 
     // resist
-    ctx.drawImage(resBag, column2 - bagHalfWidth, row2 - bagHalfHeight);
-    ctx.fillText(resBag.alt, column2, row2 + bagHalfHeight + fontBuffer);
+    ctx.drawImage(resBag, columns[1] - bagHalfWidth, rows[1] - bagHalfHeight);
+    ctx.fillText(resBag.alt, columns[1], rows[1] + bagHalfHeight + fontBuffer);
     
     // speed
-    ctx.drawImage(spdBag, column3 - bagHalfWidth, row2 - bagHalfHeight);
-    ctx.fillText(resBag.alt, column3, row2 + bagHalfHeight + fontBuffer);
+    ctx.drawImage(spdBag, columns[2] - bagHalfWidth, rows[1] - bagHalfHeight);
+    ctx.fillText(resBag.alt, columns[2], rows[1] + bagHalfHeight + fontBuffer);
+}
+
+// contains code for tracking amount of times a bag has been clicked on
+// + seeing if the stat has been trained enough to increase,
+// and if so doing the appropriate resets
+function trainStat(bag, yourDorb)
+{
+    for(let i = 0; i < 6; i++)
+    {
+        if (clicks[i][0] == bag)
+        {
+            clicks[i][1]++;     // Increase click count
+            if (clicks[i][1] == clicks[i][2])       // Check if threshold has been met
+            {
+                clicks[i][1] = 0;       // Reset counter
+                yourDorb.stats[i] += 1;
+                clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);
+                console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");
+
+            }
+            else 
+            {
+                console.log("Training " + dorb.statDefinitions[i] + "...");
+            }
+            
+            return;
+        }
+    }
 }
 
 function setThresholds(yourDorb)
 {
     for(let i = 0; i < 6; i++)
     {
-        clicks[0][2] = yourDorb.stats[i] * 3;
+        clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);
     }
 }
-
-function clickBag(e)
-{
-    let bag = e.alt;
-    let index;
-    for(let i = 0; i < 6; i++)
-    {
-        if (clicks[i][0] == bag)
-        {
-            clicks[i][1]++;
-            if (clicks[i][1] >= clicks[i][2])
-            {
-                console.log("Stat increased!")
-                clicks[i][1] = 0;
-                clicks[i][2] = ((((clicks[i][2])/3) + 1) * 3);
-                clicks[i][3] = true;
-            }
-            else 
-            {
-                alert("Training " + dorb.statDefinitions[i]);
-            }
-        }
-    }
-}
-
-function updateStats(yourDorb)
-{
-    for(let i = 0; i < 6; i++)
-    {
-        if (clicks[i][3] == true)
-        {
-            console.log("Stat increased: " + dorb.statDefinitions[i] + "!");
-            yourDorb.stats[i] += 1;
-            clicks[i][3] == false;
-        }
-    }
-}
-
 
 function drawBar(current, max, xmin, xmax)
 {
@@ -326,4 +357,4 @@ function setEnemyDorbImage(imageURL)
     enemyDorbImage.src = imageURL;
 }
 
-export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage};
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds};

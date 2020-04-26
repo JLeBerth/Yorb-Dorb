@@ -4,10 +4,11 @@ import * as rita from "./rita.js";
 import * as combat from "./combat.js";
 
 //declare drawstate
-let drawState = "home"
+let drawState = "train"
 
 let ritaDorb, firstMove, secondMove, testDorb, loadDorb, testDorb2;
 let click = false;
+let clickCoordinates = [null, null];
 
 function setupDorb()
 {
@@ -71,7 +72,8 @@ function loop() {
             canvas.drawHomeScreen(testDorb);
             break;
         case "train":
-            canvas.drawTrainingScreen(testDorb);
+            canvas.setThresholds(testDorb);
+            canvas.drawTrainingScreen(testDorb, click, clickCoordinates);
             break;
         case "combat":
             
@@ -119,14 +121,12 @@ document.querySelector("#canvas").addEventListener('mousedown', e =>{
 });
 
 function handleMouseDown(e){
-      e.preventDefault();
+    e.preventDefault();
 
-      // get the mouse position
-    console.log(e.clientX + "," + e.clientY);
-      let mouseX=parseInt(e.clientX);
-      let mouseY=parseInt(e.clientY);
-
-      click = true;
+    // get the mouse position
+    // console.log(e.clientX + "," + e.clientY);
+    clickCoordinates = [parseInt(e.clientX), parseInt(e.clientY)];
+    click = true;
 
     }
 
