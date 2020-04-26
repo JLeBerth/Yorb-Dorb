@@ -5,6 +5,7 @@ let ctx,canvasWidth,canvasHeight
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
 let dorbSprite;
+let enemydorbSprite;
 
 hpBag = document.querySelector("#bag-hp");
 hpBag.onclick = clickBag;
@@ -18,10 +19,15 @@ let bagHalfWidth = hpBag.width/2;
 let bagHalfHeight = hpBag.height/2;
 
 
-let testimage = new Image();
-testimage.src = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
-testimage.onload = function() {
-    dorbSprite =  new classes.ImageSprite(250,350,300,{x:1,y:0},0,testimage);
+let yourDorbImage = new Image();
+yourDorbImage.onload = function() {
+    dorbSprite =  new classes.ImageSprite(250,350,300,{x:1,y:0},0,yourDorbImage);
+}
+
+let enemyDorbImage = new Image();
+enemyDorbImage.onload = function()
+{
+    enemydorbSprite = new classes.ImageSprite(250, 350, 300, {x:1,y:0},0,enemyDorbImage);
 }
 let clicks = [
     ["Health", 0, 10, false],
@@ -55,6 +61,10 @@ function drawHomeScreen(yourDorb)
     
     //dorb name
     ctx.fillText(yourDorb.name, canvasWidth / 2 - 100, 100);
+    
+    //dorb type
+    ctx.font = "30px Arial";
+    ctx.fillText("Type: " + yourDorb.type.name, canvasWidth /2 - 100, 150);
     
     //test rectangle for dorb image
     ctx.fillRect(100, 200, 300, 300);
@@ -91,10 +101,13 @@ function drawHomeScreen(yourDorb)
             ctx.font = "18px Arial";
             ctx.fillText("Power: " + yourDorb.moves[i].power, 450, 700 + (i * 65));
             ctx.fillText(yourDorb.moves[i].description, 120, 720 + (i * 65));
-            ctx.fillText("Type: " + yourDorb.moves[i].type.name, 600, 720 + (i * 65));
+            ctx.fillText("Type: " + yourDorb.moves[i].type.name, 650, 720 + (i * 65));
         }
     
-    dorbSprite.draw(ctx);
+    if(dorbSprite != null)
+        {
+            dorbSprite.draw(ctx);
+        }
 }
 
 function drawTrainingScreen(yourDorb)
@@ -113,11 +126,18 @@ function drawTrainingScreen(yourDorb)
     setupBags();
     updateStats(yourDorb);
     setThresholds(yourDorb);
+    ctx.restore();
 }
 
-function drawCombatScreen(yourDorb)
+function drawCombatScreen(combatState, combatText)
 {
+    ctx.save();
+    ctx.fillStyle="#7EC850";
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,canvasHeight - (canvasHeight/3),canvasWidth,canvasHeight);
+    ctx.restore();
 }
 
 // HELPERS 
@@ -231,5 +251,9 @@ document.querySelector("#canvas").addEventListener('mousedown', e =>{
    handleMouseDown(e); 
 });
 
+function setYourDorbImage(imageURL)
+{
+    yourDorbImage.src = imageURL;
+}
 
-export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen};
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage};

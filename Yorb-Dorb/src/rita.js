@@ -92,7 +92,7 @@ function generateMove(type)
     // description
     let moveDescGrammar = {
 	"<start>" : [moveDesc[Math.floor(Math.random() * 3)]],
-    "<type>" : [type],
+    "<type>" : [type.name],
 	"<rb>" : [RiTa.randomWord("rb"), RiTa.randomWord("rb"), RiTa.randomWord("rb"), RiTa.randomWord("rb")],
     "<verb>" : [RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb")],
     "<jj>" : [RiTa.randomWord("jj"), RiTa.randomWord("jj"), RiTa.randomWord("jj"), RiTa.randomWord("jj")],

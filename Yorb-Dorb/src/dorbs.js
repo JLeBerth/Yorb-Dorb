@@ -46,6 +46,13 @@ personality[5].eyes = "eyes3";
 personality[6].eyes = "eyes7";
 personality[7].eyes = "eyes5";
 
+type[0].color = "EAD8EA";
+type[1].color = "EF5E20";
+type[2].color = "FCFF56";
+type[3].color = "B79E77";
+type[4].color = "97FF8B";
+type[5].color = "3A93D4";
+
 //define strengths and weaknesses
 type[0].strongVS = [];
 type[0].weakVS = [];
@@ -79,14 +86,14 @@ Object.freeze(type);
 Object.freeze(personality);
 
 class Dorb {
-    constructor(name, description, dorbtype, nstats, personalitytype, dorbImageURL) {
+    constructor(name, description, dorbtype, nstats, personalitytype) {
         this.name = name;
         this.description = description;
-        this.dorbImage = dorbImageURL;
         this.type = dorbtype;
         this.personality = personalitytype;
         this.stats = nstats;
         this.moves = [];
+        this.imgURL = getImageURL(this.personality, this.type);
     }
 
     addMove(newMove) {
@@ -122,6 +129,11 @@ class Move {
         //relates to the used statistic to defend the move, following above stat definitions
         this.skillDID = skillDefenseID;
     }
+}
+
+function getImageURL(personality, type)
+{
+    return "https://api.adorable.io/avatars/face/" + personality.eyes + "/" + personality.nose + "/" + personality.mouth + "/" + type.color;
 }
 
 export{Dorb, Move, type, personality, statDefinitions};
