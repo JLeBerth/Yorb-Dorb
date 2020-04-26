@@ -27,7 +27,7 @@ yourDorbImage.onload = function() {
 let enemyDorbImage = new Image();
 enemyDorbImage.onload = function()
 {
-    enemydorbSprite = new classes.ImageSprite(250, 350, 300, {x:1,y:0},0,enemyDorbImage);
+    enemydorbSprite = new classes.ImageSprite(canvasWidth - 250, 350, 300, {x:1,y:0},0,enemyDorbImage);
 }
 let clicks = [
     ["Health", 0, 10, false],
@@ -129,7 +129,7 @@ function drawTrainingScreen(yourDorb)
     ctx.restore();
 }
 
-function drawCombatScreen(combatState, combatText)
+function drawCombatScreen(combatState)
 {
     ctx.save();
     ctx.fillStyle="#7EC850";
@@ -137,6 +137,39 @@ function drawCombatScreen(combatState, combatText)
     
     ctx.fillStyle = "black";
     ctx.fillRect(0,canvasHeight - (canvasHeight/3),canvasWidth,canvasHeight);
+    
+    
+    if(dorbSprite != null)
+        {
+            dorbSprite.draw(ctx);
+        }
+    
+    if(enemydorbSprite != null)
+        {
+            enemydorbSprite.draw(ctx);
+        }
+    
+    ctx.fillStyle = "gray";
+    ctx.fillRect(150, 575, 175, 75);
+    ctx.fillRect(canvasWidth - 350, 575, 175, 75);
+    
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Health", 150, 590);
+    ctx.fillText("Health",canvasWidth -350, 590);
+    
+    drawBar(combatState.healthOne, combatState.maxhealthOne, 160, 315);
+    drawBar(combatState.healthTwo, combatState.maxhealthTwo, canvasWidth - 340, canvasWidth - 185);
+    
+    if(combatState.chooseMove)
+        {
+            
+        }
+    else
+        {
+        
+        }
+    
     ctx.restore();
 }
 
@@ -251,9 +284,37 @@ document.querySelector("#canvas").addEventListener('mousedown', e =>{
    handleMouseDown(e); 
 });
 
+function drawBar(current, max, xmin, xmax)
+{
+    let y = 615;
+    let barWidth = xmax-xmin;
+    let pointWidth = barWidth / max;
+    ctx.save();
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 14;
+    ctx.beginPath();
+    ctx.moveTo(xmin, y);
+    ctx.lineTo(xmax, y);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.strokeStyle = "green";
+    ctx.beginPath();
+    ctx.moveTo(xmin-1, y);
+    ctx.lineTo(xmin + (current * pointWidth), y);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+}
+
 function setYourDorbImage(imageURL)
 {
     yourDorbImage.src = imageURL;
 }
 
-export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage};
+function setEnemyDorbImage(imageURL)
+{
+    enemyDorbImage.src = imageURL;
+}
+
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage};

@@ -6,7 +6,7 @@ import * as combat from "./combat.js";
 //declare drawstate
 let drawState = "home"
 
-let ritaDorb, firstMove, secondMove, testDorb, loadDorb;
+let ritaDorb, firstMove, secondMove, testDorb, loadDorb, testDorb2;
 
 function setupDorb()
 {
@@ -37,7 +37,7 @@ else
 //make second dorb for testing combat
 // Make Dorb
 ritaDorb = rita.generateDorb();
-let testDorb2 = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
+testDorb2 = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
 
 // Move 3
 firstMove = rita.generateMove(testDorb2.type);
@@ -56,8 +56,8 @@ function init() {
     setupDorb();
     canvas.setupCanvas(document.querySelector("#canvas"));
     setupUI();
-    canvas.setYourDorbImage(testDorb.imgURL)
-    console.log(testDorb.imgURL);
+    canvas.setYourDorbImage(testDorb.imgURL);
+    canvas.setEnemyDorbImage(testDorb2.imgURL);
     //combat.assignDorbs(testDorb, loadDorb);
     //combat.loop();
 
@@ -74,7 +74,8 @@ function loop() {
             canvas.drawTrainingScreen(testDorb);
             break;
         case "combat":
-            canvas.drawCombatScreen("a","b")
+            let combatState = {healthOne: 15, maxhealthOne: 20, healthTwo: 25, maxhealthTwo: 200, chooseMove: true};
+            canvas.drawCombatScreen(combatState)
             break;
     }
 }
