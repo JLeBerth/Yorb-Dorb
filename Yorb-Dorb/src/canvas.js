@@ -2,21 +2,24 @@ import * as classes from "./classes.js";
 import * as dorb from "./dorbs.js";
 import * as utils from "./utils.js";
 
-let ctx,canvasWidth,canvasHeight
+let ctx,canvasWidth,canvasHeight;
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
 let dorbSprite;
 let enemydorbSprite;
 
+// Image references
 hpBag = document.querySelector("#bag-hp");
-// hpBag.onclick = clickBag;
-
 attBag = document.querySelector("#bag-att");
 sklBag = document.querySelector("#bag-skl");
 defBag = document.querySelector("#bag-def");
 resBag = document.querySelector("#bag-res");
 spdBag = document.querySelector("#bag-spd");
+
+let graphics;
+let sweat = document.querySelector("#sweat");
+let exclamation = document.querySelector("#exclamation");
 
 let bagHalfWidth, bagHalfHeight;
 let columns, rows;
@@ -57,6 +60,7 @@ function setupCanvas(canvasElement)
     bagHalfWidth = hpBag.width/2;
     bagHalfHeight = hpBag.height/2;
 
+    graphics = [];
     
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
@@ -130,12 +134,10 @@ function drawTrainingScreen(yourDorb, click, coordinates)
     
     ctx.fillStyle = "white";
     ctx.font = "40px Arial";
-    
-    // title
     ctx.textAlign = "center";
     ctx.fillText("Training with " + yourDorb.name, canvasWidth/2, 100); 
     
-    setupBags();
+    drawBags();
     
     if (click == true)
     {
@@ -149,6 +151,15 @@ function drawTrainingScreen(yourDorb, click, coordinates)
                     {
                         case "00":
                             trainStat("Health", yourDorb);
+                            
+                            /*if (trainStat("Health", yourDorb))
+                            {
+                                addGraphic("exclamation", columns[b]);
+                            }
+                            else
+                            {
+                                addGraphic("sweat", columns[b]);
+                            }*/
                             break;
                         case "01":
                             trainStat("Attack", yourDorb);
@@ -209,45 +220,59 @@ function drawCombatScreen(combatState)
     
     drawBar(combatState.healthOne, combatState.maxhealthOne, 160, 315);
     drawBar(combatState.healthTwo, combatState.maxhealthTwo, canvasWidth - 340, canvasWidth - 185);
-    
+        
     if(combatState.chooseMove)
-        {
-            
-        }
+    {
+        // draw buttons
+    }
     else
-        {
-         ctx.font = "40px Arial";
-         wrapText(combatState.message, 50, texty + 60, canvasWidth - 100, 35, ctx);
-        }
+    {
+        ctx.font = "40px Arial";
+
+        wrapText(combatState.message, 50, texty + 60, canvasWidth - 100, 35, ctx);
+    }
     
     ctx.restore();
 }
 
-// HELPERS -----------
+// TRAINING HELPERS -----------
 
-// wrap text function made using tutorial from html5canvastutorials
-function wrapText(text, x, y, maxWidth, lineHeight, ctx) {
-    let words = text.split(' ');
-    var line = '';
-
-    for (var n = 0; n < words.length; n++) {
-        var testLine = line + words[n] + ' ';
-        var metrics = ctx.measureText(testLine);
-        var testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-            ctx.fillText(line, x, y);
-            line = words[n] + ' ';
-            y += lineHeight;
-        } else {
-            line = testLine;
-        }
+/*function addGraphic(graphic, bagX)
+{
+    let newGraphic = []
+    
+    // figure out what graphic
+    switch (graphic)
+    {
+        case "sweat":
+            newGraphic[0] = sweat;
+            break;
+        case "exclamation"
+            newGraphic[0] = exclamation;
+        default:
+            break;
     }
-    ctx.fillText(line, x, y);
-  
-}
+    
+    // determine the x and y
+    let coinFlip = Math.floor(Math.random()*2);
+    
+    if (coinFlip == 1)
+    {
+        newGraphic[1] = bagX - bagHalfWidth;
+    }
+    
+    
+    // set the velocities and acceleration
+    
+}*/
+
+/*function drawGraphics()
+{
+    
+}*/
 
 // draw punching bags to screen
-function setupBags()
+function drawBags()
 {   
     ctx.textAlign = "center";
     ctx.font = "28px Arial";
@@ -301,27 +326,55 @@ function trainStat(bag, yourDorb)
             if (clicks[i][1] == clicks[i][2])       // Check if threshold has been met
             {
                 clicks[i][1] = 0;       // Reset counter
-                yourDorb.stats[i] += 1;
-                clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);
-                console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");
+                yourDorb.stats[i] += 1;     // Increase stat
+                clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);       // Assign new threshold
+                console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");        // output message
+                return true;
 
             }
             else 
             {
                 console.log("Training " + dorb.statDefinitions[i] + "...");
+                return false;
             }
             
-            return;
         }
     }
 }
 
+// to be called before the state is shown
+// make sure that thresholds are properly pre-determined 
 function setThresholds(yourDorb)
 {
     for(let i = 0; i < 6; i++)
     {
         clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);
     }
+}
+
+
+// COMBAT HELPERS ---------------------
+
+// wrap text function made using tutorial from html5canvastutorials
+function wrapText(text, x, y, maxWidth, lineHeight, ctx)
+{
+    let words = text.split(' ');
+    var line = '';
+
+    for (var n = 0; n < words.length; n++) {
+        var testLine = line + words[n] + ' ';
+        var metrics = ctx.measureText(testLine);
+        var testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, x, y);
+  
 }
 
 function drawBar(current, max, xmin, xmax)
@@ -345,6 +398,12 @@ function drawBar(current, max, xmin, xmax)
     ctx.stroke();
     ctx.closePath();
     ctx.restore();
+}
+
+// take in the names of moves from the combat state
+function drawMoves()
+{
+    // draw two rectangles at anchors along the canvas
 }
 
 function setYourDorbImage(imageURL)

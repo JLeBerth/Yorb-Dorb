@@ -42,22 +42,22 @@ function loop(clicked)
                 break;
                 
                 case turnState.chooseMoves:
-                if(dorbOneMove != -1 && dorbTwoMove != -1)
+                    if(dorbOneMove != -1 && dorbTwoMove != -1)
                     {
-                        
+
                         currentState = turnState.resolveMoves;
                         canProgress = false;
                     }
-                else
+                    else
                     {
-                        //code to allow players to choose moves with button inputs, for now moves default to the first move
+                        // code to allow players to choose moves with button inputs, for now moves default to the first move
                         console.log("moves not chosen");
                         message = "Moves Not Chosen"
-                        dorbOneMove = 0;
+                        dorbOneMove = 0;    // this is where an input is necessary
                         dorbTwoMove = 0;
                         return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: true, message: message}
                     }
-                break;
+                    break;
                 
                 case turnState.resolveMoves:
                 console.log("resolving moves");

@@ -15,7 +15,7 @@ function setupDorb()
 if (JSON.parse(localStorage.getItem('myDorb')) != null) 
 {
     loadDorb = JSON.parse(localStorage.getItem('myDorb'));
-    testDorb = loadDorb
+    testDorb = loadDorb;
 } 
 else
 {
