@@ -37,6 +37,8 @@ function setupCanvas(canvasElement)
     ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
+
+    
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
 }
@@ -210,5 +212,23 @@ function updateStats(yourDorb)
         }
     }
 }
+
+function handleMouseDown(e){
+      e.preventDefault();
+
+      // get the mouse position
+    console.log(e.clientX + "," + e.clientY);
+      let mouseX=parseInt(e.clientX);
+      let mouseY=parseInt(e.clientY);
+
+      
+
+    }
+
+// listen for mousedown events
+document.querySelector("#canvas").addEventListener('mousedown', e =>{
+   handleMouseDown(e); 
+});
+
 
 export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen};

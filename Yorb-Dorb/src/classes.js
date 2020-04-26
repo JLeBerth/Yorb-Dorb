@@ -51,5 +51,10 @@
                 ctx.drawImage(this.image, -this.span/2,-this.span/2, this.span, this.span);
 			    ctx.restore();
             }
+            setposition(x,y)
+            {
+                this.x = x;
+                this.y = y;
+            }
         }
 export {ImageSprite, Sprite};

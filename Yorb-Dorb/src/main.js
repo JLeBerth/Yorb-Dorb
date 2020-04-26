@@ -4,7 +4,7 @@ import * as rita from "./rita.js";
 import * as combat from "./combat.js";
 
 //declare drawstate
-let drawState = "home"
+let drawState = "train"
 
 // Make Dorb
 let ritaDorb = rita.generateDorb();
