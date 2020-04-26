@@ -39,11 +39,23 @@ let testMove4 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math
 testDorb2.addMove(testMove3);
 testDorb2.addMove(testMove4);
 
+let loadDorb;
+
+if(localStorage.getItem('myDorb') != null);
+{
+    loadDorb = JSON.parse(localStorage.getItem('myDorb'));
+    console.log(testDorb.name);
+    console.log(loadDorb.name);
+    console.log(loadDorb);
+}
+
+localStorage.setItem('myDorb', JSON.stringify(testDorb));
 function init()
 {
  canvas.setupCanvas(document.querySelector("#canvas"));
- combat.assignDorbs(testDorb, testDorb2);
+ combat.assignDorbs(testDorb, loadDorb);
  combat.loop();
+    
     loop();
 }
 

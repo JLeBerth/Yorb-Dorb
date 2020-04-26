@@ -24,7 +24,7 @@ personality[1].mouth = "mouth10";
 personality[2].mouth = "mouth6";
 personality[3].mouth = "mouth1";
 personality[4].mouth = "mouth3";
-personality[5].mouth = "mouth11;
+personality[5].mouth = "mouth11";
 personality[6].mouth = "mouth5";
 personality[7].mouth = "mouth9";
 
