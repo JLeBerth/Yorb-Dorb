@@ -16,11 +16,11 @@ let bagHalfWidth = hpBag.width/2;
 let bagHalfHeight = hpBag.height/2;
 
 
-let testimage = Image();
+let testimage = new Image();
 let testSprite;
 testimage.src = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
 testimage.onload = function() {
-    testSprite = classes.ImageSprite(0,0,10,fwd={x:1,y:0},speed=0,testimage);
+    testSprite =  new classes.ImageSprite(250,350,300,{x:1,y:0},0,testimage);
 }
 let clicks = [
     ["Health", 0, 10, false],
