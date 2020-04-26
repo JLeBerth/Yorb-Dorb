@@ -18,6 +18,34 @@ let personality = {
     7: {name: 'Relaxed'},
 }
 
+// associating personality to face attributes
+personality[0].mouth = "mouth7";
+personality[1].mouth = "mouth10";
+personality[2].mouth = "mouth6";
+personality[3].mouth = "mouth1";
+personality[4].mouth = "mouth3";
+personality[5].mouth = "mouth11;
+personality[6].mouth = "mouth5";
+personality[7].mouth = "mouth9";
+
+personality[0].nose = "nose8";
+personality[1].nose = "nose7";
+personality[2].nose = "nose2";
+personality[3].nose = "nose4";
+personality[4].nose = "nose9";
+personality[5].nose = "nose3";
+personality[6].nose = "nose6";
+personality[7].nose = "nose5";
+
+personality[0].eyes = "eyes7";
+personality[1].eyes = "eyes10";
+personality[2].eyes = "eyes6";
+personality[3].eyes = "eyes9";
+personality[4].eyes = "eyes4";
+personality[5].eyes = "eyes3";
+personality[6].eyes = "eyes7";
+personality[7].eyes = "eyes5";
+
 //define strengths and weaknesses
 type[0].strongVS = [];
 type[0].weakVS = [];
