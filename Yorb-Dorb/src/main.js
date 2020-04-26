@@ -7,6 +7,7 @@ import * as combat from "./combat.js";
 let drawState = "home"
 
 let ritaDorb, firstMove, secondMove, testDorb, loadDorb, testDorb2;
+let click = false;
 
 function setupDorb()
 {
@@ -33,8 +34,11 @@ else
     testDorb.addMove(testMove);
     testDorb.addMove(testMove2);
 }
+}
     
-//make second dorb for testing combat
+//make random dorb for combat
+function generateEnemyDorb()
+    {
 // Make Dorb
 ritaDorb = rita.generateDorb();
 testDorb2 = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
@@ -50,17 +54,13 @@ let testMove4 = new dorb.Move(secondMove[0], secondMove[1], testDorb2.type, (Mat
 // Add Moves
 testDorb2.addMove(testMove3);
 testDorb2.addMove(testMove4);
-}
+    }
 
 function init() {
     setupDorb();
     canvas.setupCanvas(document.querySelector("#canvas"));
     setupUI();
     canvas.setYourDorbImage(testDorb.imgURL);
-    canvas.setEnemyDorbImage(testDorb2.imgURL);
-    //combat.assignDorbs(testDorb, loadDorb);
-    //combat.loop();
-
     loop();
 }
 
@@ -74,10 +74,14 @@ function loop() {
             canvas.drawTrainingScreen(testDorb);
             break;
         case "combat":
-            let combatState = {healthOne: 15, maxhealthOne: 20, healthTwo: 25, maxhealthTwo: 200, chooseMove: true};
+            
+            let combatState = combat.loop(click);
             canvas.drawCombatScreen(combatState)
+
             break;
     }
+    
+    click = false;
 }
 
 function setupUI() {
@@ -93,6 +97,10 @@ function setupUI() {
         drawState = 'train';
     }
     fightButton.onclick = e => {
+        generateEnemyDorb();
+        canvas.setEnemyDorbImage(testDorb2.imgURL);
+        combat.assignDorbs(testDorb,testDorb2);
+        combat.reset();
         drawState = 'combat';
     }
     saveButton.onclick = e => {
@@ -104,6 +112,23 @@ function saveDorb() {
     console.log("saved");
     localStorage.setItem('myDorb', JSON.stringify(testDorb));
 }
+
+// listen for mousedown events
+document.querySelector("#canvas").addEventListener('mousedown', e =>{
+   handleMouseDown(e); 
+});
+
+function handleMouseDown(e){
+      e.preventDefault();
+
+      // get the mouse position
+    console.log(e.clientX + "," + e.clientY);
+      let mouseX=parseInt(e.clientX);
+      let mouseY=parseInt(e.clientY);
+
+      click = true;
+
+    }
 
 export {
     init

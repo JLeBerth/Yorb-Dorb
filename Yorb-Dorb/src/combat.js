@@ -10,17 +10,24 @@ const turnState = {
     fightOver: 4
 }
 
-let dorbOne, dorbTwo, oneHealth, twoHealth;
+let dorbOne, dorbTwo, oneHealth, twoHealth, oneMaxHealth, twoMaxHealth;
 
 let dorbOneMove, dorbTwoMove;
+
+let canProgress = true;
+let message = "";
 
 Object.freeze(turnState);
 
 let currentState = turnState.roundStart;
 
-function loop()
+function loop(clicked)
 {
     setTimeout(loop);
+
+    if(canProgress)
+        {
+            message = "";
     switch(currentState)
         {
                 case turnState.roundStart:
@@ -31,6 +38,7 @@ function loop()
                 dorbTwoMove = -1;
                 
                 currentState = turnState.chooseMoves;
+                
                 break;
                 
                 case turnState.chooseMoves:
@@ -38,19 +46,23 @@ function loop()
                     {
                         
                         currentState = turnState.resolveMoves;
+                        canProgress = false;
                     }
                 else
                     {
                         //code to allow players to choose moves with button inputs, for now moves default to the first move
                         console.log("moves not chosen");
+                        message = "Moves Not Chosen"
                         dorbOneMove = 0;
                         dorbTwoMove = 0;
+                        return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: true, message: message}
                     }
                 break;
                 
                 case turnState.resolveMoves:
                 console.log("resolving moves");
                 dorbsFighting();
+                canProgress = false;
                 break;
                 
                 case turnState.resolveEffects:
@@ -60,8 +72,19 @@ function loop()
                 
                 case turnState.fightOver:
                 //implement code for breaking out of fight screen and giving rewards
+                message = "Fight Complete, Click on another menu, or click Fight to start a new Fight";
                 break;
         }
+        }
+    else
+        {
+            if(clicked)
+                {
+                    canProgress = true;
+                }
+        }
+    
+    return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: false, message: message};
 }
 
 //tells combat which dorbs are fighting
@@ -71,6 +94,8 @@ function assignDorbs(one, two)
     dorbTwo = two;
     oneHealth = dorbOne.stats[0];
     twoHealth = dorbTwo.stats[0];
+    oneMaxHealth = dorbOne.stats[0];
+    twoMaxHealth = dorbTwo.stats[0];
 }
 
 function dorbsFighting()
@@ -114,6 +139,8 @@ function dorbsFighting()
                             }
                         
                     }
+    
+    message += "Click to Continue";
 }
 
 //attack function calculates damage
@@ -127,10 +154,12 @@ function attack(one, two, attackID, playerOneAttackBool)
     if(effective(two, move))
         {
             damage *= 2;
+            message += "Super Effective! ";
         }
     if(resist(two, move))
         {
             damage /= 2;
+            message += "Not Very Effective! ";
         }
     
     //round up
@@ -140,7 +169,7 @@ function attack(one, two, attackID, playerOneAttackBool)
     if(playerOneAttackBool)
         {
             twoHealth -= damage;
-             console.log(one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + twoHealth);
+             message += (one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + twoHealth + "... ");
             if(twoHealth <= 0)
             {
                 return true;
@@ -149,7 +178,7 @@ function attack(one, two, attackID, playerOneAttackBool)
     else
         {
             oneHealth -= damage;
-             console.log(one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + oneHealth);
+             message += (one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + oneHealth + "... ");
             if(oneHealth <= 0)
             {
                 return true;
@@ -186,4 +215,9 @@ function resist(dorb, move)
     return false;
 }
 
-export {loop, assignDorbs};
+function reset()
+{
+    currentState = turnState.roundStart;
+}
+
+export {loop, assignDorbs, reset};

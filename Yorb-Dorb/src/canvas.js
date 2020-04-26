@@ -131,12 +131,13 @@ function drawTrainingScreen(yourDorb)
 
 function drawCombatScreen(combatState)
 {
+    let texty =  canvasHeight - (canvasHeight/3);
     ctx.save();
     ctx.fillStyle="#7EC850";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
     ctx.fillStyle = "black";
-    ctx.fillRect(0,canvasHeight - (canvasHeight/3),canvasWidth,canvasHeight);
+    ctx.fillRect(0,texty,canvasWidth,canvasHeight);
     
     
     if(dorbSprite != null)
@@ -167,13 +168,37 @@ function drawCombatScreen(combatState)
         }
     else
         {
-        
+         ctx.font = "40px Arial";
+         wrapText(combatState.message, 50, texty + 60, canvasWidth - 100, 35, ctx);
         }
     
     ctx.restore();
 }
 
 // HELPERS 
+
+//wrap text function made using tutorial from html5canvastutorials
+function wrapText(text, x, y, maxWidth, lineHeight, ctx) {
+    let words = text.split(' ');
+    var line = '';
+
+    for (var n = 0; n < words.length; n++) {
+        var testLine = line + words[n] + ' ';
+        var metrics = ctx.measureText(testLine);
+        var testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, x, y);
+  
+}
+
+
 function setupBags()
 {   
     ctx.textAlign = "center";
@@ -267,22 +292,6 @@ function updateStats(yourDorb)
     }
 }
 
-function handleMouseDown(e){
-      e.preventDefault();
-
-      // get the mouse position
-    console.log(e.clientX + "," + e.clientY);
-      let mouseX=parseInt(e.clientX);
-      let mouseY=parseInt(e.clientY);
-
-      
-
-    }
-
-// listen for mousedown events
-document.querySelector("#canvas").addEventListener('mousedown', e =>{
-   handleMouseDown(e); 
-});
 
 function drawBar(current, max, xmin, xmax)
 {
