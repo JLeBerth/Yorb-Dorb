@@ -1,3 +1,4 @@
+import * as classes from "./classes.js";
 import * as dorb from "./dorbs.js";
 let ctx,canvasWidth,canvasHeight
 
@@ -14,6 +15,13 @@ spdBag = document.querySelector("#bag-spd");
 let bagHalfWidth = hpBag.width/2;
 let bagHalfHeight = hpBag.height/2;
 
+
+let testimage = Image();
+let testSprite;
+testimage.src = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
+testimage.onload = function() {
+    testSprite = classes.ImageSprite(0,0,10,fwd={x:1,y:0},speed=0,testimage);
+}
 let clicks = [
     ["Health", 0, 10, false],
     ["Attack", 0, 10, false],
@@ -82,6 +90,8 @@ function drawHomeScreen(yourDorb)
             ctx.fillText(yourDorb.moves[i].description, 120, 720 + (i * 65));
             ctx.fillText("Type: " + yourDorb.moves[i].type.name, 600, 720 + (i * 65));
         }
+    
+    testSprite.draw(ctx);
 }
 
 function drawTrainingScreen(yourDorb)
