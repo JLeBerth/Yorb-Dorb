@@ -4,6 +4,8 @@ let ctx,canvasWidth,canvasHeight
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
+let dorbSprite;
+
 hpBag = document.querySelector("#bag-hp");
 hpBag.onclick = clickBag;
 
@@ -17,10 +19,9 @@ let bagHalfHeight = hpBag.height/2;
 
 
 let testimage = new Image();
-let testSprite;
 testimage.src = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
 testimage.onload = function() {
-    testSprite =  new classes.ImageSprite(250,350,300,{x:1,y:0},0,testimage);
+    dorbSprite =  new classes.ImageSprite(250,350,300,{x:1,y:0},0,testimage);
 }
 let clicks = [
     ["Health", 0, 10, false],
@@ -93,7 +94,7 @@ function drawHomeScreen(yourDorb)
             ctx.fillText("Type: " + yourDorb.moves[i].type.name, 600, 720 + (i * 65));
         }
     
-    testSprite.draw(ctx);
+    dorbSprite.draw(ctx);
 }
 
 function drawTrainingScreen(yourDorb)

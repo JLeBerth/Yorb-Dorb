@@ -8,14 +8,14 @@ let  type = {
 }
 
 let personality = {
-    0: 'Sassy',
-    1: 'Hasty',
-    2: 'Brave',
-    3: 'Docile',
-    4: 'Timid',
-    5: 'Quirky',
-    6: 'Jolly',
-    7: 'Relaxed',
+    0: {name: 'Sassy'},
+    1: {name: 'Hasty'},
+    2: {name: 'Brave'},
+    3: {name: 'Docile'},
+    4: {name: 'Timid'},
+    5: {name: 'Quirky'},
+    6: {name: 'Jolly'},
+    7: {name: 'Relaxed'},
 }
 
 //define strengths and weaknesses
