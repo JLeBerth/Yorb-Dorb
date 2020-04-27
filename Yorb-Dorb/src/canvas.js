@@ -274,6 +274,7 @@ function drawCombatScreen(combatState)
 // draw punching bags to screen
 function drawBags()
 {   
+    ctx.save();
     ctx.textAlign = "center";
     ctx.font = "28px Arial";
     let fontBuffer = 28 + 20;
@@ -311,6 +312,7 @@ function drawBags()
     // speed
     ctx.drawImage(spdBag, columns[2] - bagHalfWidth, rows[1] - bagHalfHeight);
     ctx.fillText(resBag.alt, columns[2], rows[1] + bagHalfHeight + fontBuffer);
+    ctx.restore();
 }
 
 // contains code for tracking amount of times a bag has been clicked on
@@ -380,6 +382,10 @@ function wrapText(text, x, y, maxWidth, lineHeight, ctx)
 function drawBar(current, max, xmin, xmax)
 {
     let y = 615;
+    if(current < 0)
+        {
+            current = 0;
+        }
     let barWidth = xmax-xmin;
     let pointWidth = barWidth / max;
     ctx.save();

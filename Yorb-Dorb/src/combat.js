@@ -161,6 +161,10 @@ function attack(one, two, attackID, playerOneAttackBool)
             damage /= 2;
             message += "Not Very Effective! ";
         }
+    if(one.type == move.type)
+        {
+            damage *= 1.5;
+        }
     
     //round up
     damage = Math.ceil(damage);
@@ -207,7 +211,7 @@ function resist(dorb, move)
 {
     for(let i = 0; i < dorb.type.strongVS.length; i++)
         {
-            if (move.type.name == types[dorb.type.weakVS[i]].name)
+            if (move.type.name == types[dorb.type.strongVS[i]].name)
                 {
                     return true;
                 }
