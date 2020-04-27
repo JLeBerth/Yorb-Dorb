@@ -51,7 +51,7 @@ function loop(clicked)
                     else
                     {
                         // code to allow players to choose moves with button inputs, for now moves default to the first move
-                        console.log("moves not chosen");
+                        // console.log("moves not chosen");
                         message = "Moves Not Chosen"
                         if(dorbTwoMove == -1)
                             {

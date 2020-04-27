@@ -78,12 +78,13 @@ function loop() {
         case "combat":
             
             let combatState = combat.loop(click);
-            canvas.drawCombatScreen(combatState)
+            canvas.drawCombatScreen(combatState, click, clickCoordinates);
 
             break;
     }
     
     click = false;
+    clickCoordinates = [null, null];
 }
 
 function setupUI() {

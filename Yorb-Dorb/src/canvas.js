@@ -4,6 +4,7 @@ import * as utils from "./utils.js";
 import * as combat from "./combat.js";
 
 let ctx,canvasWidth,canvasHeight;
+let backgroundColor, bgClrs;
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
@@ -18,9 +19,9 @@ defBag = document.querySelector("#bag-def");
 resBag = document.querySelector("#bag-res");
 spdBag = document.querySelector("#bag-spd");
 
-let graphics;
+/*let graphics;
 let sweat = document.querySelector("#sweat");
-let exclamation = document.querySelector("#exclamation");
+let exclamation = document.querySelector("#exclamation");*/
 
 let bagHalfWidth, bagHalfHeight;
 let columns, rows;
@@ -61,7 +62,10 @@ function setupCanvas(canvasElement)
     bagHalfWidth = hpBag.width/2;
     bagHalfHeight = hpBag.height/2;
 
-    graphics = [];
+    // graphics = [];
+    
+    bgClrs = ["#faa298", "#98f0fa"];
+    backgroundColor = bgClrs[0];
     
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
@@ -130,7 +134,7 @@ function drawHomeScreen(yourDorb)
 function drawTrainingScreen(yourDorb, click, coordinates)
 {    
     ctx.save();
-    ctx.fillStyle = "#faa298";
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
     ctx.fillStyle = "white";
@@ -189,7 +193,7 @@ function drawTrainingScreen(yourDorb, click, coordinates)
     ctx.restore();
 }
 
-function drawCombatScreen(combatState)
+function drawCombatScreen(combatState, click, coordinates)
 {
     let texty =  canvasHeight - (canvasHeight/3);
     ctx.save();
@@ -225,7 +229,25 @@ function drawCombatScreen(combatState)
     if(combatState.chooseMove)
     {
         // draw buttons
-    }
+        drawMoves(combatState.moves);
+        
+        // AABB(mouseX, mouseY, bagX, bagY, bagWidth, bagHeight)
+        
+        if (click == true)
+        {
+            if (utils.AABB(coordinates[0], coordinates[1], 150, canvasHeight - 250, 250, 150))
+            {
+                combat.chooseAttack(0);
+                // combatState.message = "Click to continue...";
+                
+            }        
+            else if (utils.AABB(coordinates[0], coordinates[1], canvasWidth - 400, canvasHeight - 250, 250, 150))
+            {
+                combat.chooseAttack(1);
+                // combatState.message = "Click to continue...";
+            }
+        }        
+   }
     else
     {
         ctx.font = "40px Arial";
@@ -265,12 +287,13 @@ function drawCombatScreen(combatState)
     
     // set the velocities and acceleration
     
-}*/
+}
 
-/*function drawGraphics()
+function drawGraphics()
 {
     
-}*/
+}
+*/
 
 // draw punching bags to screen
 function drawBags()
@@ -312,7 +335,7 @@ function drawBags()
     
     // speed
     ctx.drawImage(spdBag, columns[2] - bagHalfWidth, rows[1] - bagHalfHeight);
-    ctx.fillText(resBag.alt, columns[2], rows[1] + bagHalfHeight + fontBuffer);
+    ctx.fillText(spdBag.alt, columns[2], rows[1] + bagHalfHeight + fontBuffer);
     ctx.restore();
 }
 
@@ -326,12 +349,17 @@ function trainStat(bag, yourDorb)
         if (clicks[i][0] == bag)
         {
             clicks[i][1]++;     // Increase click count
-            if (clicks[i][1] == clicks[i][2])       // Check if threshold has been met
+            if (clicks[i][1] >= clicks[i][2])       // Check if threshold has been met
             {
                 clicks[i][1] = 0;       // Reset counter
                 yourDorb.stats[i] += 1;     // Increase stat
-                clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);       // Assign new threshold
+                // clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);       // Assign new threshold
                 console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");        // output message
+                switch (backgroundColor)
+                {
+                    case bgClrs[0]: backgroundColor = bgClrs[1]; break; 
+                    case bgClrs[1]: backgroundColor = bgClrs[0]; break;
+                }
                 return true;
 
             }
@@ -351,7 +379,7 @@ function setThresholds(yourDorb)
 {
     for(let i = 0; i < 6; i++)
     {
-        clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);
+        clicks[i][2] = (yourDorb.stats[i] * 2) + (Math.floor(Math.random() * 3 + 2));
     }
 }
 
@@ -408,9 +436,22 @@ function drawBar(current, max, xmin, xmax)
 }
 
 // take in the names of moves from the combat state
-function drawMoves()
+function drawMoves(moves)
 {
     // draw two rectangles at anchors along the canvas
+    ctx.save();
+    
+    ctx.fillRect(150, canvasHeight - 250, 250, 150);
+    ctx.fillRect(canvasWidth - 400, canvasHeight - 250, 250, 150);
+    
+    ctx.fillStyle = "black";
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(moves[0].name, 275, canvasHeight - 175);
+    ctx.fillText(moves[1].name, canvasWidth - 275, canvasHeight - 175);
+    
+    ctx.restore();
+    
 }
 
 function setYourDorbImage(imageURL)
