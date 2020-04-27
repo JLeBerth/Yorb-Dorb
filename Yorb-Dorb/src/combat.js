@@ -53,8 +53,10 @@ function loop(clicked)
                         // code to allow players to choose moves with button inputs, for now moves default to the first move
                         console.log("moves not chosen");
                         message = "Moves Not Chosen"
-                        dorbOneMove = 0;    // this is where an input is necessary
-                        dorbTwoMove = 0;
+                        if(dorbTwoMove == -1)
+                            {
+                                dorbTwoMove = Math.floor(Math.random() * dorbTwo.moves.length);
+                            }
                         return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: true, message: message, moves: dorbOne.moves}
                     }
                     break;
@@ -224,4 +226,9 @@ function reset()
     currentState = turnState.roundStart;
 }
 
-export {loop, assignDorbs, reset};
+function chooseAttack(attackID)
+{
+    dorbOneMove = attackID;
+}
+
+export {loop, assignDorbs, reset, chooseAttack};

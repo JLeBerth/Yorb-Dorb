@@ -1,6 +1,7 @@
 import * as classes from "./classes.js";
 import * as dorb from "./dorbs.js";
 import * as utils from "./utils.js";
+import * as combat from "./combat.js";
 
 let ctx,canvasWidth,canvasHeight;
 
