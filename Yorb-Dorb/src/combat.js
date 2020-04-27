@@ -46,7 +46,7 @@ function loop(clicked)
                     {
 
                         currentState = turnState.resolveMoves;
-                        canProgress = false;
+                        canProgress = true;
                     }
                     else
                     {
