@@ -55,7 +55,7 @@ function loop(clicked)
                         message = "Moves Not Chosen"
                         dorbOneMove = 0;    // this is where an input is necessary
                         dorbTwoMove = 0;
-                        return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: true, message: message}
+                        return {healthOne: oneHealth, maxhealthOne: oneMaxHealth, healthTwo: twoHealth, maxhealthTwo: twoMaxHealth, chooseMove: true, message: message, moves: dorbOne.moves}
                     }
                     break;
                 
