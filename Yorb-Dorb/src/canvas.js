@@ -464,4 +464,6 @@ function setEnemyDorbImage(imageURL)
     enemyDorbImage.src = imageURL;
 }
 
+
+
 export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds};
