@@ -13,3 +13,5 @@ home: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Home_Icon.svg/51
 resizing: https://www.piskelapp.com/
 
 button styling help: https://stackoverflow.com/questions/15487408/buttons-text-vertical-align, http://jsfiddle.net/kA8pp/4/
+
+font help: https://www.pagecloud.com/blog/how-to-add-custom-fonts-to-any-website
