@@ -4,35 +4,55 @@
     <meta charset='utf-8' />
     <title>Yorb Dorb</title>
     <link href="styles/default-styles.css" rel=stylesheet />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rita/1.3.94/rita-full.js" integrity="sha256-JiBQUIqNWcLOeJ9hzQE/fu+9+m3gg0Vhndm3+q+2dBs=" crossorigin="anonymous"></script>
+    
+    <!-- RiTa API -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rita/1.3.94/rita-full.js" integrity="sha256-JiBQUIqNWcLOeJ9hzQE/fu+9+m3gg0Vhndm3+q+2dBs=" crossorigin="anonymous"></script> 
+    
+    <!-- Zhang Qa Font -->
+    <link src="styles/fonts/zhang-qa.regular.ttf">
+    
+    <!-- Make Images Invisible in Footer -->
+    <style> #invisibleImages { visibility: hidden }</style>
+    
     <script src="./src/loader.js" type="module"></script>
-    <style> #images { visibility: hidden }</style>
+    
 </head>
 <body>
-    <div id="ui">
-    <p>placeholder for ui</p>
-    </div>
+    <p class = "title">Y<u>orb Dorb</u></p>
+    <p class = "makers">A Virtual Pet Website by Jacob Leberth and Gavriel Miles</p>
+
+    <div id = "container">
+        <div id="canvasScreen">
+            <canvas width="1000px" height="1000px" id="canvas"></canvas>
+        </div>     <!-- Canvas -->
+
+        <div id="controls">
+            <button id="home" class = "uiButton">Home</button>
+            <button id="training" class = "uiButton">Train</button>
+            <button id="combat" class = "uiButton">Fight</button>
+            <button id="save" class = "uiButton">Save Dorb</button>
+        </div>    <!-- Controls -->
+    </div>    <!-- Container -->
     
-    <div id="canvasScreen">
-    <canvas width="1000px" height="1000px" id="canvas"></canvas>
-    </div>
-    
-    <div id="controls">
-    <button id="home">Home</button>
-    <button id="training">Train</button>
-    <button id="combat">Fight</button>
-    <button id="save">Save Dorb</button>
-    </div>
-    
-    <div id="images">
-        <img id="bag-hp" src="images/bag-1.png" alt = "Health">
-        <img id="bag-att" src="images/bag-2.png" alt = "Attack">
-        <img id="bag-skl" src="images/bag-3.png" alt = "Skill">
-        <img id="bag-def" src="images/bag-4.png" alt = "Defense">
-        <img id="bag-res" src="images/bag-5.png" alt = "Resist">
-        <img id="bag-spd" src="images/bag-6.png" alt = "Speed">
-        <img id="sweat" src="images/water-droplets.png">        
-        <img id="exclamation" src="images/exclamation.png">
-    </div>
+    <!-- Invisible Images in the Footer -->
+    <footer>
+        <div id="invisibleImages">
+            <img id="bag-hp" src="images/bag-1.png" alt = "Health">
+            <img id="bag-att" src="images/bag-2.png" alt = "Attack">
+            <img id="bag-skl" src="images/bag-3.png" alt = "Skill">
+            <img id="bag-def" src="images/bag-4.png" alt = "Defense">
+            <img id="bag-res" src="images/bag-5.png" alt = "Resist">
+            <img id="bag-spd" src="images/bag-6.png" alt = "Speed">
+            <img id="sweat" src="images/water-droplets.png">        
+            <img id="exclamation" src="images/exclamation.png">
+            <img id="home-icon" src="images/home.png">            
+            <img id="training-icon" src="images/muscle.png">
+            <img id="combat-icon" src="images/swords.png">
+            <img id="save-icon" src="images/save.png">
+
+            <img id="exclamation" src="images/exclamation.png">
+
+        </div>
+    </footer>
 </body>
 </html>

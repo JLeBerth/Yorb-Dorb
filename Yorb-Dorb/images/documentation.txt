@@ -1,3 +1,15 @@
 bag: https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTNjGr5x2YcohjdMBSuEMU0og_Vkazscvy6bwIH0mDtyjFKH1Lg&usqp=CAU
 
+save: https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Save_font_awesome.svg/512px-Save_font_awesome.svg.png
+
 adjust hue: https://pinetools.com/adjust-hue-image
+
+swords: https://svgsilh.com/svg_v2/310788.svg
+
+bicep: https://toppng.com/uploads/preview/bicep-muscle-bicep-icon-11553443179ookog7kjwx.png
+
+home: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Home_Icon.svg/512px-Home_Icon.svg.png
+
+resizing: https://www.piskelapp.com/
+
+button styling help: https://stackoverflow.com/questions/15487408/buttons-text-vertical-align, http://jsfiddle.net/kA8pp/4/

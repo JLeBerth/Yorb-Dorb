@@ -447,8 +447,8 @@ function drawMoves(moves)
     ctx.fillStyle = "black";
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(moves[0].name, 275, canvasHeight - 175);
-    ctx.fillText(moves[1].name, canvasWidth - 275, canvasHeight - 175);
+    ctx.fillText(moves[0].name + ", " + moves[0].power, 275, canvasHeight - 175);
+    ctx.fillText(moves[1].name + ", " + moves[1].power, canvasWidth - 275, canvasHeight - 175);
     
     ctx.restore();
     
