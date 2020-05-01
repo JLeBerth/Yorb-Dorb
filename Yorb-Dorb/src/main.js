@@ -9,6 +9,7 @@ let drawState = "home"
 let ritaDorb, firstMove, secondMove, testDorb, loadDorb, testDorb2;
 let click = false;
 let clickCoordinates = [null, null];
+let canvasElement = document.querySelector("#canvas");
 
 function setupDorb()
 {
@@ -59,7 +60,7 @@ testDorb2.addMove(testMove4);
 
 function init() {
     setupDorb();
-    canvas.setupCanvas(document.querySelector("#canvas"));
+    canvas.setupCanvas(canvasElement);
     setupUI();
     canvas.setYourDorbImage(testDorb.imgURL);
     loop();
@@ -125,8 +126,15 @@ function handleMouseDown(e){
     e.preventDefault();
 
     // get the mouse position
-    // console.log(e.clientX + "," + e.clientY);
-    clickCoordinates = [parseInt(e.clientX), parseInt(e.clientY)];
+    let x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+    let y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    
+    x -= canvasElement.offsetLeft;
+    y -= canvasElement.offsetTop;
+    
+    
+     //console.log(x + "," + y);
+    clickCoordinates = [parseInt(x), parseInt(y)];
     click = true;
 
     }
