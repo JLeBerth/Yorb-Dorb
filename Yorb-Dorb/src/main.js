@@ -2,6 +2,7 @@ import * as canvas from "./canvas.js";
 import * as dorb from "./dorbs.js";
 import * as rita from "./rita.js";
 import * as combat from "./combat.js";
+import * as quiz from "./quiz.js";
 
 //declare drawstate
 let drawState = "home"
