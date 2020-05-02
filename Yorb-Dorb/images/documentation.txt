@@ -21,3 +21,5 @@ font help: https://www.pagecloud.com/blog/how-to-add-custom-fonts-to-any-website
 styling our select help: https://github.com/filamentgroup/select-css/blob/master/src/select-css.css
 
 flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
+very useful: https://www.w3schools.com/cssref/
