@@ -76,8 +76,8 @@
             }
             update()
             {
-                if(this.timer == 0.0) { /* delete itself */ }
-                else { this.timer -= 0.1; this.span -= (this.span/40); }
+                this.timer -= (this.timer/40); 
+                this.span -= (this.span/40); 
             }
             
         }
