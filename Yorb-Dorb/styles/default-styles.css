@@ -1,32 +1,25 @@
-@font-face {
-    font-family: "Zhang Qa";
-    src: url(/fonts/zhang-qa.regular.woff) format("woff"),
-}
-
 .title
 {
-    font-family: 'Zhang Qa', Arial, sans-serif;     
-        /* https://www.1001fonts.com/zhang-qa-font.html#license */
+    font-family: 'zhang_qaregular'; /* Font from stylesheet.css */
     color: #CDEF9F; /* Primary */
     font-size: 120px;
-    padding: auto;
-    margin: auto;
+    padding: 0px;
+    margin: 0px;
     -webkit-text-stroke: 2px #769252; /* Darkest */
         /* https://css-tricks.com/almanac/properties/t/text-stroke/ */
 
     letter-spacing: 1px;
-    font-weight: bolder;
     text-align: center;
 }
 
 .makers
 {
-    padding: auto;
-    margin: auto;
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 0px;
+    margin: 0px;
     margin-bottom: 10px;
-    font-size: 45px;
+    font-size: 30px;
     letter-spacing: 1px;
-    font-family: 'Zhang QA';
     text-align: center;
     color: #769252; /* Primary */
 }
@@ -34,14 +27,23 @@
 .uiButton
 {
     background-color: #CDEF9F; /* Primary */
-    border: 2px solid #769252; /* Darkest */
+    border: 4px solid #769252; /* Darkest */
     color: #769252; /* Darkest */
-    border-radius: 100px;
-    width: 100px;
-    height: 100px;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    padding-top:80px;
-    cursor: pointer;
+    width: 84px;
+    height: 92px;
+
+    margin-bottom: 10px;
+    
+    background-size: 64px;
+    background-position:center top;
+    background-repeat:no-repeat;
+    
+    /*font-family: 'zhang_qaregular';*/
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top:58px;   /* Text Offset */
+
 }
 
 .uiButton:active
@@ -65,18 +67,52 @@ body
     justify-content: center;
 }
 
+#pageElements
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: auto;
+}
+
 #controls
 {
     display: flex;
     flex-direction: column;
     font-size: 22px;
+    padding-left: 5px;
+}
+
+#dorbSelect
+{
+    width: 150px;
 }
 
 #home
 {
     background-image: url(/images/home.png);
-    background-size: cover;
 }
+
+#training
+{
+    background-image: url(/images/muscle.png);
+}
+
+#combat
+{
+    background-image: url(/images/swords.png);
+}
+
+#save
+{
+    background-image: url(/images/save.png);
+}
+
+#dorbLoad
+{
+    background-image: url(/images/load.png);
+}
+
 /*
     background-image: url('../images/coffee-icon.png');
     background-size: cover;
@@ -89,4 +125,4 @@ body
             <button id="home" class = "uiButton">Home</button>
             <button id="training" class = "uiButton">Train</button>
             <button id="combat" class = "uiButton">Fight</button>
-            <button id="save" class = "uiButton">Save Dorb</button>
+            <button id="save" class = "uiButton">Save Dorb</button>*/

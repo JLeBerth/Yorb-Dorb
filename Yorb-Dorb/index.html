@@ -9,8 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rita/1.3.94/rita-full.js" integrity="sha256-JiBQUIqNWcLOeJ9hzQE/fu+9+m3gg0Vhndm3+q+2dBs=" crossorigin="anonymous"></script> 
     
     <!-- Zhang Qa Font -->
-    <!--<link src="styles/fonts/zhang-qa.regular.ttf">-->
-    <link rel="stylesheet" type="text/css" href="/styles/fonts/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="styles/fonts/stylesheet.css">
+    
+    <!-- Open Sans Condensed Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
     
     <!-- Make Images Invisible in Footer -->
     <style> #invisibleImages { visibility: hidden }</style>
@@ -21,27 +23,34 @@
 <body>
     <p class = "title">Y<u>orb Dorb</u></p>
     <p class = "makers">A Virtual Pet Website by Jacob Leberth and Gavriel Miles</p>
-
+    
     <div id = "container">
         <div id="canvasScreen">
             <canvas width="1000px" height="1000px" id="canvas"></canvas>
         </div>     <!-- Canvas -->
 
-        <div id="controls">
-            <button id="home" class = "uiButton">Home</button>
-            <button id="training" class = "uiButton">Train</button>
-            <button id="combat" class = "uiButton">Fight</button>
-            <button id="save" class = "uiButton">Save</button>
-            <button id="dorbLoad" class = "uiButton">Load</button>
-            <select id="dorbSelect">
-                <option>No dorbs to load</option>
-            </select>
+        <div id="pageElements">
 
-        </div>    <!-- Controls -->
+            <div id="controls">
+                <button id="home" class = "uiButton">Home</button>
+                <button id="training" class = "uiButton">Train</button>
+                <button id="combat" class = "uiButton">Fight</button>
+                <button id="save" class = "uiButton">Save</button>
+                <button id="dorbLoad" class = "uiButton">Load</button>
+                <select id="dorbSelect">
+                    <option>No dorbs to load</option>
+                </select>
+
+            </div>    <!-- Controls -->
+        
+        </div>    <!-- Page Elements -->
+        
     </div>    <!-- Container -->
     
     <!-- Invisible Images in the Footer -->
     <footer>
+
+        
         <div id="invisibleImages">
             <img id="bag-hp" src="images/bag-1.png" alt = "Health">
             <img id="bag-att" src="images/bag-2.png" alt = "Attack">

@@ -10,6 +10,8 @@ bicep: https://toppng.com/uploads/preview/bicep-muscle-bicep-icon-11553443179ook
 
 home: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Home_Icon.svg/512px-Home_Icon.svg.png
 
+load: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/OOjs_UI_icon_upload.svg/1024px-OOjs_UI_icon_upload.svg.png
+
 resizing: https://www.piskelapp.com/
 
 button styling help: https://stackoverflow.com/questions/15487408/buttons-text-vertical-align, http://jsfiddle.net/kA8pp/4/
