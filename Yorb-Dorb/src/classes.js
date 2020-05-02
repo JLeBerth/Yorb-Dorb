@@ -57,4 +57,29 @@
                 this.y = y;
             }
         }
-export {ImageSprite, Sprite};
+
+        class TrainingGraphic extends ImageSprite
+        {
+            constructor(x=0,y=0,span=10,fwd={x:1,y:0},speed=0,image)
+            {
+                super(x,y,span,fwd,speed);
+                this.image = image;
+                this.timer = span/20;
+            }
+            draw(ctx)
+            {
+                ctx.save();
+                ctx.translate(this.x,this.y);
+                ctx.drawImage(this.image, -this.span/2,-this.span/2, this.span, this.span);
+			    ctx.restore();
+                this.update();
+            }
+            update()
+            {
+                if(this.timer == 0.0) { /* delete itself */ }
+                else { this.timer -= 0.1; this.span -= (span/20); }
+            }
+            
+        }
+        
+export {TrainingGraphic, ImageSprite, Sprite};

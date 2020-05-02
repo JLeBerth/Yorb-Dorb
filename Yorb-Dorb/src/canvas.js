@@ -19,9 +19,9 @@ defBag = document.querySelector("#bag-def");
 resBag = document.querySelector("#bag-res");
 spdBag = document.querySelector("#bag-spd");
 
-/*let graphics;
+let graphics;
 let sweat = document.querySelector("#sweat");
-let exclamation = document.querySelector("#exclamation");*/
+let exclamation = document.querySelector("#exclamation");
 
 let bagHalfWidth, bagHalfHeight;
 let columns, rows;
@@ -69,6 +69,8 @@ function setupCanvas(canvasElement)
     
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    
+    graphics = [];
 }
 
 function drawHomeScreen(yourDorb)
@@ -152,36 +154,39 @@ function drawTrainingScreen(yourDorb, click, coordinates)
             {
                 if (utils.AABB(coordinates[0], coordinates[1], columns[b] - bagHalfWidth, rows[a] - (bagHalfHeight * 3/5), bagHalfWidth * 2, bagHalfHeight * 2))
                 {
+                    ctx.save();
+                    
+                    let bag = "";
                     switch ("" + a + b + "")
                     {
                         case "00":
-                            trainStat("Health", yourDorb);
-                            
-                            /*if (trainStat("Health", yourDorb))
-                            {
-                                addGraphic("exclamation", columns[b]);
-                            }
-                            else
-                            {
-                                addGraphic("sweat", columns[b]);
-                            }*/
+                            bag = "Health";
                             break;
                         case "01":
-                            trainStat("Attack", yourDorb);
+                            bag = "Attack";
                             break;
                         case "02":
-                            trainStat("Skill", yourDorb);
+                            bag = "Skill";
                             break;
                         case "10":
-                            trainStat("Defense", yourDorb);
+                            bag = "Defense";
                             break;
                         case "11":
-                            trainStat("Resist", yourDorb);
+                            bag = "Resist";
                             break;
                         case "12":
-                            trainStat("Speed", yourDorb);
+                            bag = "Speed";
                             break;
                     }  
+                    
+                    if (trainStat(bag, yourDorb))
+                    {
+                        addGraphic("exclamation", columns[b], rows[a]);
+                    }
+                    else
+                    {
+                        addGraphic("sweat", columns[b], rows[a]);
+                    }
                     
                     ctx.restore();
                     return;
@@ -189,6 +194,8 @@ function drawTrainingScreen(yourDorb, click, coordinates)
             } 
         }
     }
+    
+    drawGraphics();
     
     ctx.restore();
 }
@@ -260,18 +267,20 @@ function drawCombatScreen(combatState, click, coordinates)
 
 // TRAINING HELPERS -----------
 
-/*function addGraphic(graphic, bagX)
+function addGraphic(graphic, bagX, bagY)
 {
-    let newGraphic = []
+    let graphicImage;
+    let graphicX;
+    let graphicY = bagY;
     
     // figure out what graphic
     switch (graphic)
     {
         case "sweat":
-            newGraphic[0] = sweat;
+            graphicImage = sweat;
             break;
-        case "exclamation"
-            newGraphic[0] = exclamation;
+        case "exclamation":
+            graphicImage = exclamation;
         default:
             break;
     }
@@ -279,21 +288,29 @@ function drawCombatScreen(combatState, click, coordinates)
     // determine the x and y
     let coinFlip = Math.floor(Math.random()*2);
     
-    if (coinFlip == 1)
-    {
-        newGraphic[1] = bagX - bagHalfWidth;
-    }
+    if (coinFlip == 1)  { graphicX = bagX - bagHalfWidth; }
+    else                { graphicX = bagX + bagHalfWidth; }
     
-    
-    // set the velocities and acceleration
-    
+    graphics.push(new classes.TrainingGraphic(graphicX, graphicY, 30, {x:1,y:0}, 0, graphicImage));
 }
 
 function drawGraphics()
 {
+    for (let i = 0; i < graphics.length; i++)
+    {
+        if(graphics[i].timer == 0)
+        {
+            graphics[i] = null;
+            graphics.splice(i, 1);
+        }
+
+    }
     
+    for (let i = 0; i < graphics.length; i++)
+    {
+        graphics[i].draw(ctx);
+    }
 }
-*/
 
 // draw punching bags to screen
 function drawBags()
@@ -463,7 +480,6 @@ function setEnemyDorbImage(imageURL)
 {
     enemyDorbImage.src = imageURL;
 }
-
 
 
 export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds};
