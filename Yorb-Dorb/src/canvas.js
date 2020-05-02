@@ -490,13 +490,11 @@ function trainStat(bag, yourDorb)
                 clicks[i][1] = 0;       // Reset counter
                 yourDorb.stats[i] += 1;     // Increase stat
                 // clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);       // Assign new threshold
-                console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");        // output message
                 return true;
 
             }
             else 
             {
-                console.log("Training " + dorb.statDefinitions[i] + "...");
                 return false;
             }
             
