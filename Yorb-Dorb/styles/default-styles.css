@@ -1,14 +1,11 @@
 @font-face {
-font-family: "CustomFont";
-src: url("https://yoursite.com/css/fonts/CustomFont.eot");
-src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"),
-url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"),
-url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");
+    font-family: "Zhang Qa";
+    src: url(/fonts/zhang-qa.regular.woff) format("woff"),
 }
 
 .title
 {
-    font-family: 'Zhang QA';     
+    font-family: 'Zhang Qa', Arial, sans-serif;     
         /* https://www.1001fonts.com/zhang-qa-font.html#license */
     color: #CDEF9F; /* Primary */
     font-size: 120px;
