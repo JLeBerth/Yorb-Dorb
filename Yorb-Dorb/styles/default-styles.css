@@ -84,27 +84,27 @@ body
 
 #home
 {
-    background-image: url(/images/home.png);
+    background-image: url("/images/home.png");
 }
 
 #training
 {
-    background-image: url(/images/muscle.png);
+    background-image: url("/images/muscle.png");
 }
 
 #combat
 {
-    background-image: url(/images/swords.png);
+    background-image: url("/images/swords.png");
 }
 
 #save
 {
-    background-image: url(/images/save.png);
+    background-image: url("/images/save.png");
 }
 
 #dorbLoad
 {
-    background-image: url(/images/load.png);
+    background-image: url("/images/load.png");
 }
 
 #dorbSelect
