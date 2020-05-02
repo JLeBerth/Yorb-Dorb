@@ -13,4 +13,12 @@ function AABB(mouseX, mouseY, bagX, bagY, bagWidth, bagHeight)
     return false;
 }
 
-export {AABB};
+const getLinearGradient = (ctx,startX,startY,endX,endY,colorStops) => {
+  let lg = ctx.createLinearGradient(startX,startY,endX,endY);
+  for(let stop of colorStops){
+    lg.addColorStop(stop.percent,stop.color);
+  }
+  return lg;
+};
+
+export {AABB, getLinearGradient};

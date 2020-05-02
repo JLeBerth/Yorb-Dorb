@@ -32,10 +32,11 @@ if (dorbList.length > 0)
 {
     loadDorb = JSON.parse(localStorage.getItem(dorbList[0]));
     testDorb = loadDorb;
+    canvas.setYourDorbImage(testDorb.imgURL);
 } 
 else
 {
-    testDorb = randomDorb();
+    drawState = 'quiz';
 }
     
 }
@@ -91,9 +92,8 @@ function generateEnemyDorb()
 function init() {
     loadDorbList();
     setupDorb();
-    canvas.setupCanvas(canvasElement);
     setupUI();
-    canvas.setYourDorbImage(testDorb.imgURL);
+    canvas.setupCanvas(canvasElement);
     loop();
 }
 
@@ -112,6 +112,12 @@ function loop() {
             let combatState = combat.loop(click);
             canvas.drawCombatScreen(combatState, click, clickCoordinates);
             break;
+        case 'quiz':
+            if(canvas.drawQuiz(quiz.quiz, click, clickCoordinates))
+                {
+                    drawState = 'home';
+                }
+            break;
     }
     
     click = false;
@@ -126,24 +132,40 @@ function setupUI() {
     let loadButton = document.querySelector("#dorbLoad");
 
     homeButton.onclick = e => {
+        if(drawState != 'quiz')
+            {
         drawState = 'home';
+            }
     }
     trainButton.onclick = e => {
+        if(drawState != 'quiz')
+            {
         drawState = 'train';
+            }
     }
     fightButton.onclick = e => {
+        if(drawState != 'quiz')
+            {
         generateEnemyDorb();
         canvas.setEnemyDorbImage(testDorb2.imgURL);
         combat.reset();
         combat.assignDorbs(testDorb,testDorb2);
         combat.reset();
         drawState = 'combat';
+            }
     }
     saveButton.onclick = e => {
+        if(drawState != quiz)
+            {
         saveDorb();
+            }
     }
     
     loadButton.onclick = e => {
+        if(drawState == 'quiz')
+            {
+                return;
+            }
         if(drawState == 'combat')
             {return;}
         loadDorbFromList();

@@ -67,10 +67,6 @@ let quiz =
                 [new answer('Yes',[new personalityScore(7,2), new personalityScore(0, 1)]),
                 new answer('No',[new personalityScore(1,2), [new personalityScore(1,1)]])]),
     
-    new question("Can you sincerely thank someone when you feel grateful?",
-                [new answer('Yes',[new personalityScore(3,2), new personalityScore(7, 1)]),
-                new answer('No'[new personalityScore(0,2), new personalityScore(5, 1)])]),
-    
     new question("Do you think you are cool? Be honest.",
                 [new answer('Yes',[new personalityScore(0,2)]),
                 new answer('No',[new personalityScore(7,2)])]),
