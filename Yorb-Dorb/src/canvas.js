@@ -265,7 +265,7 @@ function drawCombatScreen(combatState, click, coordinates)
 // TRAINING HELPERS -----------
 
 function addGraphic(graphic, bagX, bagY)
-{
+{   
     let graphicImage;
     let graphicDirection;
     let graphicX;
@@ -298,12 +298,14 @@ function addGraphic(graphic, bagX, bagY)
         default:
             break;
     }
-    
+    ctx.save();
     graphics.push(new classes.TrainingGraphic(graphicX, graphicY, 60, {x:20,y:20}, 0, graphicImage));
+    ctx.restore();
 }
 
 function drawGraphics()
 {
+    ctx.save();
     for (let i = 0; i < graphics.length; i++)
     {
         if(graphics[i].timer == 0)
@@ -318,6 +320,7 @@ function drawGraphics()
     {
         graphics[i].draw(ctx);
     }
+    ctx.restore();
 }
 
 // draw punching bags to screen
@@ -361,6 +364,7 @@ function drawBags()
     // speed
     ctx.drawImage(spdBag, columns[2] - bagHalfWidth, rows[1] - bagHalfHeight);
     ctx.fillText(spdBag.alt, columns[2], rows[1] + bagHalfHeight + fontBuffer);
+    
     ctx.restore();
 }
 
