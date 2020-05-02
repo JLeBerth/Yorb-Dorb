@@ -56,6 +56,7 @@
 body
 {
     background-color: #E4F1D3;  /* Lightest */
+    font-family: 'Open Sans Condensed', sans-serif;
 }
 
 #container
@@ -128,6 +129,32 @@ body
     color: #769252;
 }
 
-#dorbSelect option {
+#dorbSelect option 
+{
 	font-weight:normal;
+}
+
+li
+{
+    font-size: 24px;
+    color: #769252;
+    list-style-type: square;
+}
+
+ul
+{
+    display: table;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+h1
+{
+    color: #769252;
+    text-align: center;
+}
+
+hr
+{
+    border: 1px solid #769252;
 }
