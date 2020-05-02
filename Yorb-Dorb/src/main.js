@@ -12,6 +12,7 @@ let click = false;
 let clickCoordinates = [null, null];
 let canvasElement = document.querySelector("#canvas");
 let dorbList = [];
+let quizResult = 0;
 
 let dorbSelect = document.querySelector("#dorbSelect")
 
@@ -41,19 +42,20 @@ else
     
 }
 
-function quizDorb()
+function quizDorb(personalityID)
 {
     // Make Dorb
     ritaDorb = rita.generateDorb();
-    let quizD = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], dorb.personality[ritaDorb[3]].stats, dorb.personality[ritaDorb[3]]);
+    let quizD = new dorb.Dorb(ritaDorb[0], dorb.personality[personalityID].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], dorb.personality[personalityID].stats, dorb.personality[personalityID]);
 
     // Move 1
-    let firstMove = rita.generateMove(randDorb.type);
+    let firstMove = rita.generateMove(quizD.type);
     let randMove = new dorb.Move(firstMove[0], firstMove[1], quizD.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
 
     // Move 2
-    let secondMove = rita.generateMove(randDorb.type);
-    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], quizD.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 4);
+    let type2 = (Math.floor(Math.random() * 6));
+    let secondMove = rita.generateMove(dorb.type[type2]);
+    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], dorb.type[type2], (Math.floor(Math.random() * 3) + 3) * 10, 2, 4);
 
     // Add Moves
     quizD.addMove(randMove);
@@ -115,6 +117,8 @@ function loop() {
         case 'quiz':
             if(canvas.drawQuiz(quiz.quiz, click, clickCoordinates))
                 {
+                    testDorb = quizDorb(quizResult);
+                    canvas.setYourDorbImage(testDorb.imgURL);
                     drawState = 'home';
                 }
             break;
@@ -155,7 +159,7 @@ function setupUI() {
             }
     }
     saveButton.onclick = e => {
-        if(drawState != quiz)
+        if(drawState != 'quiz')
             {
         saveDorb();
             }
@@ -191,8 +195,8 @@ function loadDorbFromList()
 {
     if(dorbSelect.value == 'NEWDORB')
         {
-            testDorb = randomDorb();
-            canvas.setYourDorbImage(testDorb.imgURL);
+            drawState = 'quiz';
+            canvas.resetQuiz();
         }
     else
         {
@@ -247,6 +251,11 @@ function handleMouseDown(e){
 
     }
 
+function setQuizID(number)
+{
+    quizResult = number;
+}
+
 export {
-    init
+    init, setQuizID
 };

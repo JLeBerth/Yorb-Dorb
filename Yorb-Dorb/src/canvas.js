@@ -2,6 +2,7 @@ import * as classes from "./classes.js";
 import * as dorb from "./dorbs.js";
 import * as utils from "./utils.js";
 import * as combat from "./combat.js";
+import * as main from "./main.js";
 
 let ctx,canvasWidth,canvasHeight;
 
@@ -37,6 +38,8 @@ let currentQuestion = 0;
 
 let bagHalfWidth, bagHalfHeight;
 let columns, rows;
+
+let quizResults = [0,0,0,0,0,0,0];
 
 let yourDorbImage = new Image();
 yourDorbImage.onload = function() {
@@ -146,6 +149,9 @@ function drawQuiz(questions, click, coordinates)
                 {
                     if (utils.AABB(coordinates[0], coordinates[1], 50, 400 + (heightperAnswer * i), canvasWidth - 100, heightperAnswer - 25))
                         {
+                            let id = questions[currentQuestion].answers[i].score[0].ID;
+                            let increase = questions[currentQuestion].answers[i].score[0].increase;
+                            quizResults[id] += increase;
                             currentQuestion++;
                         }
                 }
@@ -155,6 +161,17 @@ function drawQuiz(questions, click, coordinates)
     ctx.restore();
     if(currentQuestion >= questions.length)
         {
+            let personalityID = 0;
+            let idScore = 0;
+            for(let i = 0; i < quizResults.length; i++)
+                {
+                    if (quizResults[i] > idScore)
+                        {
+                            personalityID = i;
+                            idScore = quizResults[i];
+                        }
+                }
+            main.setQuizID(personalityID);
             return true;
         }
     return false;
@@ -555,7 +572,9 @@ function drawMoves(moves)
     // draw two rectangles at anchors along the canvas
     ctx.save();
     
+    ctx.fillStyle = "#" +moves[0].type.color;
     ctx.fillRect(150, canvasHeight - 250, 250, 150);
+    ctx.fillStyle = "#" +moves[1].type.color;
     ctx.fillRect(canvasWidth - 400, canvasHeight - 250, 250, 150);
     
     ctx.fillStyle = "black";
@@ -578,5 +597,10 @@ function setEnemyDorbImage(imageURL)
     enemyDorbImage.src = imageURL;
 }
 
+function resetQuiz()
+{
+    let quizResults = [0,0,0,0,0,0,0];
+    currentQuestion = 0;
+}
 
-export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds, drawQuiz};
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds, drawQuiz, resetQuiz};

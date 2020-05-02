@@ -92,11 +92,7 @@ let quiz =
     
     new question("A friend brought over something you'd forgotten. How do you thank your friend?",
                 [new answer('Say thank you regularly',[new personalityScore(3,2)]),
-                new answer('Say thanks, but be cool',[new personalityScore(0,2)])]),
-    
-    new question("You valiantly fight the aliens… But, you are defeated… An alien says to you: 'YOU HAVE IMPRESSED US. IT WAS A PLEASURE TO SEE. JOIN US, AND TOGETHER WE SHALL RULE THE WORLD.' What will you do?",
-                [new answer('Rule with the aliens',[new personalityScore(0,1), new personalityScore(7, 1)]),
-                new answer('Refuse', [new personalityScore(2,4)])])
+                new answer('Say thanks, but be cool',[new personalityScore(0,2)])])
     
 ];
 
