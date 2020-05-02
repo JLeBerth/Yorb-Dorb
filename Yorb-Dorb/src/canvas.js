@@ -151,7 +151,6 @@ function drawTrainingScreen(yourDorb, click, coordinates)
             {
                 if (utils.AABB(coordinates[0], coordinates[1], columns[b] - bagHalfWidth, rows[a] - (bagHalfHeight * 3/5), bagHalfWidth * 2, bagHalfHeight * 2))
                 {
-                    ctx.save();
                     
                     let bag = "";
                     switch ("" + a + b + "")
