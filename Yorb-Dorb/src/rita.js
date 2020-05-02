@@ -78,13 +78,17 @@ function generateMove(type)
     let move = ["", ""];
     // move name, description, type index
     
+    // generate verb with first letter capitalized
+    let verb = RiTa.randomWord("vb");
+    verb = verb[0].toUpperCase() + verb.slice(1);
+    
     // name
     let moveGrammar = {
 	"<start>" : ["<type> <verb>"],
-	"<verb>" : [RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb"), RiTa.randomWord("vb")],
+	"<verb>" : [verb],
     "<type>" : [type.name]
     };
-    
+
     //"<personality>" : [RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality), RiTa.similarBySoundAndLetter(personality)],
 	//"<noun>" : [RiTa.randomWord("nn"), RiTa.randomWord("nn"), RiTa.randomWord("nn"), RiTa.randomWord("nn")]
    
