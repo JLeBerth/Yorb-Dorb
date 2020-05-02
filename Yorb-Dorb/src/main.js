@@ -34,7 +34,7 @@ if (dorbList.length > 0)
 } 
 else
 {
-    testDorb = randomDorb;
+    testDorb = randomDorb();
 }
     
 }
