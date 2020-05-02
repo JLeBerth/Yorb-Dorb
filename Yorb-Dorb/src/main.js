@@ -10,55 +10,64 @@ let ritaDorb, firstMove, secondMove, testDorb, loadDorb, testDorb2;
 let click = false;
 let clickCoordinates = [null, null];
 let canvasElement = document.querySelector("#canvas");
+let dorbList = [];
+
+let dorbSelect = document.querySelector("#dorbSelect")
+
+function loadDorbList()
+{
+    if(JSON.parse(localStorage.getItem('dorbList')) != null)
+        {
+            dorbList = JSON.parse(localStorage.getItem('dorbList'));
+            
+            restructureDorbList();
+        }
+    
+}
 
 function setupDorb()
 {
-if (JSON.parse(localStorage.getItem('myDorb')) != null) 
+if (dorbList.length > 0) 
 {
-    loadDorb = JSON.parse(localStorage.getItem('myDorb'));
+    loadDorb = JSON.parse(localStorage.getItem(dorbList[0]));
     testDorb = loadDorb;
 } 
 else
 {
+    testDorb = randomDorb;
+}
+    
+}
+
+function randomDorb()
+{
     // Make Dorb
     ritaDorb = rita.generateDorb();
-    testDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
+    let randDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
 
     // Move 1
-    firstMove = rita.generateMove(testDorb.type);
-    let testMove = new dorb.Move(firstMove[0], firstMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
+    let firstMove = rita.generateMove(randDorb.type);
+    let randMove = new dorb.Move(firstMove[0], firstMove[1], randDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
 
     // Move 2
-    secondMove = rita.generateMove(testDorb.type);
-    let testMove2 = new dorb.Move(secondMove[0], secondMove[1], testDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
+    let secondMove = rita.generateMove(randDorb.type);
+    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], randDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
 
     // Add Moves
-    testDorb.addMove(testMove);
-    testDorb.addMove(testMove2);
-}
+    randDorb.addMove(randMove);
+    randDorb.addMove(randMove2);
+    
+    return randDorb;
 }
     
 //make random dorb for combat
 function generateEnemyDorb()
     {
-// Make Dorb
-ritaDorb = rita.generateDorb();
-testDorb2 = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]] + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
-
-// Move 3
-firstMove = rita.generateMove(testDorb2.type);
-let testMove3 = new dorb.Move(firstMove[0], firstMove[1], testDorb2.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 5);
-
-// Move 4
-secondMove = rita.generateMove(testDorb2.type);
-let testMove4 = new dorb.Move(secondMove[0], secondMove[1], testDorb2.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 5);
-
-// Add Moves
-testDorb2.addMove(testMove3);
-testDorb2.addMove(testMove4);
+        testDorb2 = randomDorb();
     }
 
 function init() {
+    loadDorbList();
     setupDorb();
     canvas.setupCanvas(canvasElement);
     setupUI();
@@ -80,7 +89,6 @@ function loop() {
             
             let combatState = combat.loop(click);
             canvas.drawCombatScreen(combatState, click, clickCoordinates);
-
             break;
     }
     
@@ -93,6 +101,7 @@ function setupUI() {
     let trainButton = document.querySelector("#training");
     let fightButton = document.querySelector("#combat");
     let saveButton = document.querySelector("#save");
+    let loadButton = document.querySelector("#dorbLoad");
 
     homeButton.onclick = e => {
         drawState = 'home';
@@ -110,11 +119,63 @@ function setupUI() {
     saveButton.onclick = e => {
         saveDorb();
     }
+    
+    loadButton.onclick = e => {
+        loadDorbFromList();
+    }
 }
 
+//saves dorb then alters dorblist based on the new saves
 function saveDorb() {
-    console.log("saved");
-    localStorage.setItem('myDorb', JSON.stringify(testDorb));
+    localStorage.setItem(testDorb.name, JSON.stringify(testDorb));
+    if(!dorbList.includes(testDorb.name))
+        {
+            dorbList.push(testDorb.name);
+        }
+    localStorage.setItem('dorbList', JSON.stringify(dorbList));
+    
+    //change dorbselect to account for new saves
+    restructureDorbList();
+    
+}
+
+//loads in dorbs
+function loadDorbFromList()
+{
+    if(dorbSelect.value == 'NEWDORB')
+        {
+            testDorb = randomDorb();
+            canvas.setYourDorbImage(testDorb.imgURL);
+        }
+    else
+        {
+           loadDorb = JSON.parse(localStorage.getItem(dorbSelect.value));
+           testDorb = loadDorb;
+           canvas.setYourDorbImage(testDorb.imgURL);
+        }
+}
+
+//sets up the dorb list
+function restructureDorbList()
+{
+    //start by removing all options from dorbSelect
+        while (dorbSelect.firstChild) {
+            dorbSelect.removeChild(dorbSelect.lastChild);
+        }
+        
+        //add elements for every dorb
+        for(let i = 0; i < dorbList.length; i++)
+            {
+                let newoption = document.createElement('option');
+                newoption.text = dorbList[i];
+                newoption.value = dorbList[i];
+                dorbSelect.add(newoption);
+            }
+    
+    let newoption = document.createElement('option');
+    newoption.text = 'New Dorb';
+    newoption.value = 'NEWDORB';
+    dorbSelect.add(newoption);
 }
 
 // listen for mousedown events
