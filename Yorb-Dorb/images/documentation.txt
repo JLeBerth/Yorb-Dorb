@@ -17,3 +17,7 @@ resizing: https://www.piskelapp.com/
 button styling help: https://stackoverflow.com/questions/15487408/buttons-text-vertical-align, http://jsfiddle.net/kA8pp/4/
 
 font help: https://www.pagecloud.com/blog/how-to-add-custom-fonts-to-any-website
+
+styling our select help: https://github.com/filamentgroup/select-css/blob/master/src/select-css.css
+
+flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
