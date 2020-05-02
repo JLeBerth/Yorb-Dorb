@@ -134,6 +134,7 @@ function setupUI() {
     fightButton.onclick = e => {
         generateEnemyDorb();
         canvas.setEnemyDorbImage(testDorb2.imgURL);
+        combat.reset();
         combat.assignDorbs(testDorb,testDorb2);
         combat.reset();
         drawState = 'combat';
@@ -143,6 +144,8 @@ function setupUI() {
     }
     
     loadButton.onclick = e => {
+        if(drawState == 'combat')
+            {return;}
         loadDorbFromList();
     }
 }
