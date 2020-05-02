@@ -198,6 +198,7 @@ function drawTrainingScreen(yourDorb, click, coordinates)
 
 function drawCombatScreen(combatState, click, coordinates)
 {
+    graphics = [];
     let texty =  canvasHeight - (canvasHeight/3);
     ctx.save();
     ctx.fillStyle="#7EC850";
