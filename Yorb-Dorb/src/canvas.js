@@ -10,6 +10,10 @@ let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 let dorbSprite;
 let enemydorbSprite;
 
+let heightperAnswers;
+let numAnswers;
+let heightperAnswer;
+
 // Image references
 hpBag = document.querySelector("#bag-hp");
 attBag = document.querySelector("#bag-att");
@@ -22,6 +26,14 @@ let graphics;
 let sweatLeft = document.querySelector("#sweat-l");
 let sweatRight = document.querySelector("#sweat-r");
 let exclamation = document.querySelector("#exclamation");
+
+let gradient1;
+let gradient2;
+
+let gradientsX;
+let gradientsY;
+
+let currentQuestion = 0;
 
 let bagHalfWidth, bagHalfHeight;
 let columns, rows;
@@ -52,7 +64,11 @@ function setupCanvas(canvasElement)
     ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
+    gradientsX = canvasWidth * Math.random();
+    gradientsY = canvasHeight * Math.random();
     
+    gradient1 = utils.getLinearGradient(ctx,0,0,gradientsX,gradientsY,[{percent:0,color:"blue"},{percent:1,color:"magenta"}]);
+    gradient2 = utils.getLinearGradient(ctx,gradientsX, gradientsY,0,0,[{percent:0,color:"gray"},{percent:1,color:"green"}]);
     rows = [1/3 * canvasHeight, 
             2/3 * canvasHeight];
     columns = [1/5 * canvasWidth, 
@@ -68,6 +84,80 @@ function setupCanvas(canvasElement)
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
     graphics = [];
+}
+
+function drawAnswers(question)
+{
+    heightperAnswers = canvasHeight - 500;
+    numAnswers = question.answers.length;
+    heightperAnswer = heightperAnswers/numAnswers;
+    
+    for(let i = 0; i < numAnswers; i++)
+        {
+            ctx.save();
+            ctx.fillStyle = "black";
+            ctx.globalAlpha = 0.5;
+            ctx.fillRect(50, 400 + (heightperAnswer * i), canvasWidth - 100, heightperAnswer - 25);
+            ctx.restore();
+            
+            
+            wrapText(question.answers[i].text,100, 500 + (heightperAnswer * i), canvasWidth - 100, 60, ctx);
+        }
+    
+}
+
+function drawQuiz(questions, click, coordinates)
+{
+    
+    
+    //draw gradient
+    gradientsX += 0.25;
+    gradientsY += 0.5;
+    if(gradientsX > canvasWidth)
+        {
+            gradientsX = 0;
+        }
+    if(gradientsY > canvasHeight)
+        {
+            gradientsY = 0;
+        }
+    gradient1 = utils.getLinearGradient(ctx,0,0,gradientsX,gradientsY,[{percent:0,color:"blue"},{percent:1,color:"magenta"}]);
+    gradient2 = utils.getLinearGradient(ctx,gradientsX, gradientsY,0,0,[{percent:0,color:"blue"},{percent:1,color:"green"}]);
+    ctx.save();
+    ctx.fillStyle = gradient1;
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    ctx.fillStyle = gradient2;
+    ctx.globalAlpha = 0.9;
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    ctx.globalAlpha = 1;
+    
+    //write question and answers
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "white";
+    wrapText(questions[currentQuestion].text,100, 80, canvasWidth-100, 80, ctx);
+    
+    //draw answers
+    drawAnswers(questions[currentQuestion]);
+
+    
+    if(click == true)
+        {
+            for(let i = 0; i < numAnswers; i++)
+                {
+                    if (utils.AABB(coordinates[0], coordinates[1], 50, 400 + (heightperAnswer * i), canvasWidth - 100, heightperAnswer - 25))
+                        {
+                            currentQuestion++;
+                        }
+                }
+        }
+    
+    
+    ctx.restore();
+    if(currentQuestion >= questions.length)
+        {
+            return true;
+        }
+    return false;
 }
 
 function drawHomeScreen(yourDorb)
@@ -489,4 +579,4 @@ function setEnemyDorbImage(imageURL)
 }
 
 
-export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds};
+export{setupCanvas, drawHomeScreen, drawTrainingScreen, drawCombatScreen, setYourDorbImage, setEnemyDorbImage, setThresholds, drawQuiz};
