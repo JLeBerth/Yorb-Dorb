@@ -27,7 +27,7 @@ function loop(clicked)
 
     if(canProgress)
         {
-            message = "";
+            //message = "";
     switch(currentState)
         {
                 case turnState.roundStart:
@@ -46,6 +46,7 @@ function loop(clicked)
                     {
 
                         currentState = turnState.resolveMoves;
+                         message = "";
                         canProgress = true;
                     }
                     else
@@ -83,6 +84,7 @@ function loop(clicked)
             if(clicked)
                 {
                     canProgress = true;
+                   
                 }
         }
     
@@ -190,8 +192,6 @@ function attack(one, two, attackID, playerOneAttackBool)
                 return true;
             }
         }
-    
-   
     
     //if the attack sets health to 0 or less return true
     
