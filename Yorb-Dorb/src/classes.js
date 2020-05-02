@@ -64,7 +64,7 @@
             {
                 super(x,y,span,fwd,speed);
                 this.image = image;
-                this.timer = span/20;
+                this.timer = span/40;
             }
             draw(ctx)
             {
@@ -77,7 +77,7 @@
             update()
             {
                 if(this.timer == 0.0) { /* delete itself */ }
-                else { this.timer -= 0.1; this.span -= (span/20); }
+                else { this.timer -= 0.1; this.span -= (this.span/40); }
             }
             
         }

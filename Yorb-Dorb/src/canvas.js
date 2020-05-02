@@ -4,7 +4,6 @@ import * as utils from "./utils.js";
 import * as combat from "./combat.js";
 
 let ctx,canvasWidth,canvasHeight;
-let backgroundColor, bgClrs;
 
 let hpBag, attBag, sklBag, defBag, resBag, spdBag;
 
@@ -20,7 +19,8 @@ resBag = document.querySelector("#bag-res");
 spdBag = document.querySelector("#bag-spd");
 
 let graphics;
-let sweat = document.querySelector("#sweat");
+let sweatLeft = document.querySelector("#sweat-l");
+let sweatRight = document.querySelector("#sweat-r");
 let exclamation = document.querySelector("#exclamation");
 
 let bagHalfWidth, bagHalfHeight;
@@ -63,9 +63,6 @@ function setupCanvas(canvasElement)
     bagHalfHeight = hpBag.height/2;
 
     // graphics = [];
-    
-    bgClrs = ["#faa298", "#98f0fa"];
-    backgroundColor = bgClrs[0];
     
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
@@ -136,7 +133,7 @@ function drawHomeScreen(yourDorb)
 function drawTrainingScreen(yourDorb, click, coordinates)
 {    
     ctx.save();
-    ctx.fillStyle = backgroundColor;
+    ctx.fillStyle = "#faa298";
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
     ctx.fillStyle = "white";
@@ -270,28 +267,39 @@ function drawCombatScreen(combatState, click, coordinates)
 function addGraphic(graphic, bagX, bagY)
 {
     let graphicImage;
+    let graphicDirection;
     let graphicX;
     let graphicY = bagY;
+    
+    // determine the x and y
+    let coinFlip = Math.floor(Math.random()*2);
+    
+    if (coinFlip == 1)  { graphicX = bagX - bagHalfWidth; graphicDirection = "left";}
+    else                { graphicX = bagX + bagHalfWidth; graphicDirection = "right";}
     
     // figure out what graphic
     switch (graphic)
     {
         case "sweat":
-            graphicImage = sweat;
+
+            switch (graphicDirection)
+            {
+                case "left":
+                    graphicImage = sweatLeft;
+                    break;
+                case "right":
+                    graphicImage = sweatRight;
+                    break;
+            }
             break;
         case "exclamation":
             graphicImage = exclamation;
+            break;
         default:
             break;
     }
     
-    // determine the x and y
-    let coinFlip = Math.floor(Math.random()*2);
-    
-    if (coinFlip == 1)  { graphicX = bagX - bagHalfWidth; }
-    else                { graphicX = bagX + bagHalfWidth; }
-    
-    graphics.push(new classes.TrainingGraphic(graphicX, graphicY, 30, {x:1,y:0}, 0, graphicImage));
+    graphics.push(new classes.TrainingGraphic(graphicX, graphicY, 60, {x:20,y:20}, 0, graphicImage));
 }
 
 function drawGraphics()
@@ -372,11 +380,6 @@ function trainStat(bag, yourDorb)
                 yourDorb.stats[i] += 1;     // Increase stat
                 // clicks[i][2] = yourDorb.stats[i] * 2 + Math.floor(Math.random() * 8 + 2);       // Assign new threshold
                 console.log("Increased: " + dorb.statDefinitions[i] + " by 1!");        // output message
-                switch (backgroundColor)
-                {
-                    case bgClrs[0]: backgroundColor = bgClrs[1]; break; 
-                    case bgClrs[1]: backgroundColor = bgClrs[0]; break;
-                }
                 return true;
 
             }
