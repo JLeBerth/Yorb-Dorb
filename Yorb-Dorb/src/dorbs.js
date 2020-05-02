@@ -46,6 +46,15 @@ personality[5].eyes = "eyes3";
 personality[6].eyes = "eyes7";
 personality[7].eyes = "eyes5";
 
+personality[0].stats = [10, 5, 6, 7, 6, 5];
+personality[1].stats = [9, 5, 5, 5, 5, 7];
+personality[2].stats = [8, 8, 5, 5, 5, 6];
+personality[3].stats = [11, 6, 6, 6, 6, 1];
+personality[4].stats = [11, 4, 4, 6, 6, 5];
+personality[5].stats = [7, 6, 6, 6, 6, 6];
+personality[6].stats = [10, 5, 5, 5, 5, 5];
+personality[7].stats = [15, 4, 4, 7, 7, 3];
+
 type[0].color = "EAD8EA";
 type[1].color = "EF5E20";
 type[2].color = "FCFF56";

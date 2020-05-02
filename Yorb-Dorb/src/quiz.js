@@ -56,16 +56,16 @@ let quiz =
     
     new question("Do you like pranks?",
                 [new answer('Yes',[new personalityScore(0,2)]),
-                new answer('No',[new personalityScore(3,1), new personality(7, 1)])]),
+                new answer('No',[new personalityScore(3,1), new personalityScore(7, 1)])]),
     
     new question("How quickly do you respond to an email?",
-                [new answer('Reply right away',[new personalityScore(hardy,1), new personalityScore(1, 1)]),
+                [new answer('Reply right away',[new personalityScore(1,1), new personalityScore(1, 1)]),
                 new answer('May reply, may not',[new personalityScore(5,2)]),
                 new answer('Too much trouble',[new personalityScore(0,2)])]),
     
     new question("Are you often late for school or meetings?",
                 [new answer('Yes',[new personalityScore(7,2), new personalityScore(0, 1)]),
-                new answer('No',[new personalityScore(hardy,2), [new personalityScore(1,1)]])]),
+                new answer('No',[new personalityScore(1,2), [new personalityScore(1,1)]])]),
     
     new question("Can you sincerely thank someone when you feel grateful?",
                 [new answer('Yes',[new personalityScore(3,2), new personalityScore(7, 1)]),
@@ -91,7 +91,7 @@ let quiz =
                 new answer('With someone I like',[new personalityScore(0,2)])]),
     
     new question("When the going gets tough, do you get going?",
-                [new answer('Yes',[new personalityScore(hardy,2), new personalityScore(2, 2)]),
+                [new answer('Yes',[new personalityScore(1,2), new personalityScore(2, 2)]),
                 new answer('No',[new personalityScore(0,2), new personalityScore(5, 2)])]),
     
     new question("A friend brought over something you'd forgotten. How do you thank your friend?",

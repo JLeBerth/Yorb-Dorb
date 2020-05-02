@@ -40,11 +40,32 @@ else
     
 }
 
+function quizDorb()
+{
+    // Make Dorb
+    ritaDorb = rita.generateDorb();
+    let quizD = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], dorb.personality[ritaDorb[3]].stats, dorb.personality[ritaDorb[3]]);
+
+    // Move 1
+    let firstMove = rita.generateMove(randDorb.type);
+    let randMove = new dorb.Move(firstMove[0], firstMove[1], quizD.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
+
+    // Move 2
+    let secondMove = rita.generateMove(randDorb.type);
+    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], quizD.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 4);
+
+    // Add Moves
+    quizD.addMove(randMove);
+    quizD.addMove(randMove2);
+    
+    return quizD;
+}
+
 function randomDorb()
 {
     // Make Dorb
     ritaDorb = rita.generateDorb();
-    let randDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], [10, 5, 5, 5, 5, 5], dorb.personality[ritaDorb[3]]);
+    let randDorb = new dorb.Dorb(ritaDorb[0], dorb.personality[ritaDorb[3]].name + ": " + ritaDorb[1], dorb.type[ritaDorb[2]], dorb.personality[ritaDorb[3]].stats, dorb.personality[ritaDorb[3]]);
 
     // Move 1
     let firstMove = rita.generateMove(randDorb.type);
@@ -52,7 +73,7 @@ function randomDorb()
 
     // Move 2
     let secondMove = rita.generateMove(randDorb.type);
-    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], randDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 1, 3);
+    let randMove2 = new dorb.Move(secondMove[0], secondMove[1], randDorb.type, (Math.floor(Math.random() * 3) + 3) * 10, 2, 4);
 
     // Add Moves
     randDorb.addMove(randMove);
