@@ -63,7 +63,6 @@ function loop(clicked)
                     break;
                 
                 case turnState.resolveMoves:
-                console.log("resolving moves");
                 dorbsFighting();
                 canProgress = false;
                 break;
@@ -180,6 +179,8 @@ function attack(one, two, attackID, playerOneAttackBool)
              message += (one.name + " attacks " + two.name + " with the move: " + move.name + " dealing " + damage + " damage and setting health to " + twoHealth + "... ");
             if(twoHealth <= 0)
             {
+                let toincrease = Math.floor(Math.random() * 7);
+                dorbOne.stats[toincrease] ++;
                 return true;
             }
         }

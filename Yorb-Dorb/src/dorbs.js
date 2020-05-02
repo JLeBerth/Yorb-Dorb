@@ -108,6 +108,11 @@ class Dorb {
     addMove(newMove) {
         this.moves.push(newMove);
     }
+    
+    level() {
+        let toincrease = Math.floor(Math.random() * 7);
+        this.stats[toincrease] ++;
+    }
 
     removeMove(moveReference)
 {
